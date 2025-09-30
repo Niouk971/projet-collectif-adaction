@@ -10,8 +10,10 @@ async function fetchUsers() {
 
         console.log("voici la liste des usagers :", users);
 
-        for (let user of users) {
+        for (const user of users) {
             console.log("je m'appelle", user.first_name, user.last_name)
+            userSelector.innerHTML +=
+                `<option value="${user.id}">${user.first_name} ${user.last_name}</option>`
         };
     }
     catch (err) {
