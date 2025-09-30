@@ -22,7 +22,7 @@ const pool = new Pool({
 
 const app = express();
 app.use(express.json());
-app.use(cors({ origin: "http://127.0.0.1:5500/menu" }));
+app.use(cors({ origin: "http://127.0.0.1:5500/" }));
 
 const frontendPath = path.join(process.cwd(), "../nodejs_frontend");
 app.use(express.static(frontendPath));
