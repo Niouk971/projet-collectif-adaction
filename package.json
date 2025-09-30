@@ -1,0 +1,26 @@
+{
+  "name": "frida-adaction-felix_florian_meyko",
+  "version": "1.0.0",
+  "description": "## backlog - créer les routes GET, POST, PATCH, DELETE dans le fichier serveur.js - créer les scripts de front-end - afficher l'application avec HTML",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adatechschool/frida-adaction-felix_florian_meyko.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/adatechschool/frida-adaction-felix_florian_meyko/issues"
+  },
+  "homepage": "https://github.com/adatechschool/frida-adaction-felix_florian_meyko#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "nodemon": "^3.1.10",
+    "pg": "^8.16.3"
+  }
+}
