@@ -3,11 +3,12 @@
 // npm install nodemon
 // npm install cors
 // npm install pg
+// npm install dotenv
 
 import express from "express";
 import cors from "cors";
-import { Pool } from "pg";
 import dotenv from "dotenv";
+import { Pool } from "pg";
 import path from "path";
 
 dotenv.config();
@@ -15,7 +16,7 @@ dotenv.config();
 const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
     ssl: {
-        rejectUnauthorized: false,
+        require: true,
     },
 });
 
@@ -41,13 +42,12 @@ const testDbConnection = async () => {
     }
 };
 
-// Appelez la fonction de test
 testDbConnection();
 
-// Exemple de requête pour récupérer les plats depuis la base de données
-app.get("/menus", async (req, res) => {
+// Exemple de requête pour récupérer les utilisateurs depuis la base de données
+app.get("/users", async (req, res) => {
     try {
-        const result = await pool.query('SELECT * FROM menus');
+        const result = await pool.query('SELECT * FROM users');
         res.json(result.rows);
     } catch (err) {
         console.error(err);

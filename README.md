@@ -6,9 +6,9 @@
 - afficher l'application avec HTML
 
 ## 30/09/25
-- récupération du code 
-- 
-- 
+- récupération du code neon pour syncroniser la base de donnée
+- réparation du server.js
+- connexion de notre serveur à la base de donnée en ligne
 
 ## 29/09/25
 - nous avons pris connaissance du projet
