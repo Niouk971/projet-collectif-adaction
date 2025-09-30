@@ -22,14 +22,19 @@ const pool = new Pool({
 
 const app = express();
 app.use(express.json());
-app.use(cors({ origin: "http://127.0.0.1:5500/menu" }));
+app.use(cors({ origin: "http://127.0.0.1:5500" }));
 
-const frontendPath = path.join(process.cwd(), "../nodejs_frontend");
+
+// Configuration du chemin statique
+const frontendPath = path.join(process.cwd(), "../frontend");
 app.use(express.static(frontendPath));
 
+
+// Route pour servir index.html
 app.get("/", (req, res) => {
-    res.send("Accueil");
+    res.sendFile('html/index.html', { root: frontendPath });
 });
+
 
 // Ajoutez cette fonction pour tester la connexion
 const testDbConnection = async () => {
@@ -43,6 +48,7 @@ const testDbConnection = async () => {
 };
 
 testDbConnection();
+
 
 // Exemple de requête pour récupérer les utilisateurs depuis la base de données
 app.get("/users", async (req, res) => {
