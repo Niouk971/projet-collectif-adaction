@@ -13,7 +13,6 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import { Pool } from "pg";
-import path from "path";
 import morgan from 'morgan';
 
 
@@ -36,30 +35,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors({ origin: "http://127.0.0.1:5500" }));
 
 
-// Configuration du chemin statique
-const frontendPath = path.join(process.cwd(), "../frontend");
-app.use(express.static(frontendPath));
-
 app.use(morgan('dev')); // Logs les requêtes HTTP
 app.use((req, res, next) => {
     console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
     next();
-});
-
-
-// Route pour servir index.html
-app.get("/", (req, res) => {
-    res.sendFile('html/index.html', { root: frontendPath });
-});
-
-// Route pour servir charity.html
-app.get("/charity", (req, res) => {
-    res.sendFile('html/charity.html', { root: frontendPath });
-});
-
-// Route pour servir volunteers.html
-app.get("/volunteers", (req, res) => {
-    res.sendFile('html/volunteers.html', { root: frontendPath });
 });
 
 
