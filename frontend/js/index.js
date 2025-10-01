@@ -1,7 +1,5 @@
 const userSelector = document.querySelector('#userSelector');
 
-console.log("coucou je suis syncro");
-
 async function fetchUsers() {
     try {
         const res = await fetch(`http://localhost:3000/users`);
