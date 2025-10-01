@@ -1,14 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script defer src="/js/script.js"></script>
-    <title>Volunteers</title>
+    <title>Adaction - tableau de bord</title>
+    <script defer src="../js/volunteers.js"></script>
 </head>
-<h1>Volunteers Page</h1>
+
 <body>
-    <h1>Volunteers Page</h1>
+    <header>
+        <h1>Adaction</h1>
+    </header>
+    <div>
+        <h2><span id="userSpan">[User]</span>, voici votre tableau de bord</h2>
+        <div id="collectReviews">
+            <div id="review">
+                <div class="reviewElement" id="date">Collecte du [date]</div>
+                <div class="reviewElement" id="address">Lieu : [address]</div>
+                <div class="reviewElement" id="score">Score de la collecte : [score]</div>
+                <div class="reviewElement" id="piechart">[piechart]</div>
+            </div>
+        </div>
+        <nav>
+            <a href="index.html"><button>🏠 Accueil</button></a>
+            <a href=""><button>➕ Déclarer une nouvelle collecte</button></a>
+        </nav>
+    </div>
 </body>
-</body>
+
 </html>
