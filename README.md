@@ -1,7 +1,16 @@
 # Adaction - Felix, Florian, Meyko
 
 ## backlog
-- création des routes POST, PATCH, DELETE dans le fichier serveur.js
+
+## 02/10/25
+- Reprise des tables SQL
+- Maquette sur Excalidraw
+- Continuation du travail pour rendre le formulaire d'entrée fonctionnel
+
+## 01/10/25
+- Mise à jour des tables SQL
+- Création des routes POST, PATCH, DELETE dans le fichier serveur.js
+- Création du formulaire de connexion et des pages Charity et Vonlunteer
 
 ## 30/09/25
 - récupération du code neon pour syncroniser la base de donnée
