@@ -29,7 +29,6 @@ const pool = new Pool({
 const app = express();
 
 
-// const PORT = process.env.PORT || 3000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({ origin: "http://127.0.0.1:5500" }));
@@ -59,7 +58,7 @@ testDbConnection();
 // Récupérer les utilisateurs depuis la base de données
 app.get("/users", async (req, res) => {
     try {
-        const result = await pool.query('SELECT * FROM users ORDER BY first_name');
+        const result = await pool.query('SELECT * FROM users');
         res.json(result.rows);
     } catch (err) {
         console.error(err);
@@ -68,6 +67,18 @@ app.get("/users", async (req, res) => {
 });
 
 
+app.get("/trashes", async (req, res) => {
+    try {
+        const result = await pool.query('SELECT * FROM trashes');
+        res.json(result.rows);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Erreur serveur" });
+    }
+});
+
+
+// Récupérer un utilisateur par ID
 app.get("/user/:id", async (req, res) => {
     try {
         const id = Number(req.params.id);
@@ -84,28 +95,48 @@ app.get("/user/:id", async (req, res) => {
     }
 });
 
+
+// Récupérer le nombre total d'utilisateurs
+app.get("/users/count", async (req, res) => {
+    try {
+        const result = await pool.query('SELECT COUNT(*) FROM users');
+        res.json({ count: parseInt(result.rows[0].count) });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Erreur serveur" });
+    }
+});
+
+
 // Créer un nouvel utilisateur
 app.post("/users", async (req, res) => {
     try {
-        console.log('Received body:', req.body); // Debug log
+        console.log('Received body:', req.body);
         
         const { first_name, last_name, email } = req.body;
         if (!first_name || !last_name || !email) {
             return res.status(400).json({ 
-                error: "Tous les champs sont requis",
+                error: "Les champs first_name, last_name et email sont requis",
                 received: req.body 
             });
         }
         
         const result = await pool.query(
-            'INSERT INTO users (first_name, last_name, email) VALUES ($1, $2, $3) RETURNING *',
+            `INSERT INTO users (
+                first_name, 
+                last_name, 
+                email,
+                is_admin,
+                score,
+                created_at
+            ) VALUES ($1, $2, $3, DEFAULT, DEFAULT, CURRENT_TIMESTAMP) RETURNING *`,
             [first_name, last_name, email]
         );
         
         res.status(201).json(result.rows[0]);
     } catch (err) {
         console.error('Detailed error:', err);
-        if (err.code === '23505') { // Unique violation
+        if (err.code === '23505') {
             return res.status(409).json({ error: "Cet email existe déjà" });
         }
         res.status(500).json({ 
@@ -119,11 +150,11 @@ app.post("/users", async (req, res) => {
 app.put("/users/:id", async (req, res) => {
     try {
         const id = Number(req.params.id);
-        const { first_name, last_name, email, role } = req.body;
+        const { first_name, last_name, email } = req.body;
 
         const result = await pool.query(
-            'UPDATE users SET first_name = $1, last_name = $2, email = $3, role = $4 WHERE id = $5 RETURNING *',
-            [first_name, last_name, email, role, id]
+            'UPDATE users SET first_name = $1, last_name = $2, email = $3 WHERE id = $4 RETURNING *',
+            [first_name, last_name, email, id]
         );
 
         if (result.rows.length === 0) {
