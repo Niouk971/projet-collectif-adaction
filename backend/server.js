@@ -73,7 +73,7 @@ app.get("/users", async (req, res) => {
     }
 });
 
-// exemple de requête curl pour tester la récupération des utilisateurs
+// Exemple de requête curl pour tester la récupération des utilisateurs
 
 // curl -X GET "http://localhost:3000/users" \
 // -H "Content-Type: application/json"
