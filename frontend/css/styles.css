@@ -1,0 +1,48 @@
+#end {
+  display: flex;
+  flex-direction:row;
+  background-color: #232121;
+  justify-content: center;
+  text-align: left;
+}
+
+#end h4 {
+  color: var(--header-color, orange);
+  display: flex;
+  width: 100%;
+}
+
+#end h5 {
+   color: var(--primary-color);
+   display: flex;
+  width: 100%;
+
+}
+
+#end p {
+  color: var(--primary-color);
+  display: flex;
+  width: 100%;
+}
+
+#end h6{
+  color:var(--primary-color);
+  display: inline-flexbox;
+  width: 100%;
+
+}
+
+
+
+@media screen and (max-width: 720px) {
+  .gallery_column {
+    display : flex;
+    flex-direction: column;
+
+  }
+};
+
+.divAdopt{
+  height: 100px;
+  width: 100px;
+}
