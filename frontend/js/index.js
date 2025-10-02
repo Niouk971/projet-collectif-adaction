@@ -20,3 +20,23 @@ async function fetchUsers() {
 }
 
 fetchUsers()
+
+document.getElementById('userForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const userId = document.getElementById('userSelector').value;
+
+        fetch(`URL_TO_YOUR_BACKEND/users/${userId}`)
+            .then(response => response.json())
+            .then(user => {
+                if (user.is_admin) {
+                    window.location.href = 'admin.html';
+                } else {
+                    window.location.href = 'volunteers.html';
+                };
+            })
+            .catch(error => {
+                console.error('Error fetching user data:', error);
+                alert('An error occurred. Please try again.');
+            });
+    });
