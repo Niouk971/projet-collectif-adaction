@@ -28,8 +28,6 @@ userForm.addEventListener('submit', async function (event) {
 
     const userId = document.getElementById('userSelector').value;
 
-    console.log("ID de l'utilisateur sélectionné :", userId);
-
     if (userId === "0" || userId === "") {
         alert("Veuillez choisir votre nom dans la liste avant de continuer.");
         return;
@@ -42,9 +40,9 @@ userForm.addEventListener('submit', async function (event) {
         }
         const user = await response.json();
         if (user.is_admin) {
-            window.location.href = 'admin.html';
+            window.location.href = `admin.html?userId=${user.id}`;
         } else {
-            window.location.href = 'volunteers.html';
+            window.location.href = `volunteers.html?userId=${user.id}`;
         }
     } catch (error) {
         console.error('Erreur lors de la récupération des données utilisateur :', error);
