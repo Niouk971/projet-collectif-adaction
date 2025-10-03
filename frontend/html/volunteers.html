@@ -7,7 +7,7 @@
     <title>Adaction - tableau de bord</title>
     <script defer src="../js/volunteers.js"></script>
     <link rel="stylesheet" href="/CSS/style.css">
-
+    <link rel="stylesheet" href="../css/dashboard.css">
 </head>
 
 <body>
@@ -16,13 +16,45 @@
     </header>
     <div>
         <h2><span id="userSpan">[User]</span>, voici votre tableau de bord</h2>
-        <div id="collectReviews">
-            <div id="review">
-                <div class="reviewElement" id="date">Collecte du [date]</div>
-                <div class="reviewElement" id="address">Lieu : [address]</div>
-                <div class="reviewElement" id="score">Score de la collecte : [score]</div>
-                <div class="reviewElement" id="piechart">[piechart]</div>
-            </div>
+        <div id="tableContainer">
+            <table>
+                <tr>
+                    <th>Date</th>
+                    <th>Ville</th>
+                    <th>Score</th>
+                    <th>Détails</th>
+                </tr>
+                <tr>
+                    <th>24/09/2025</th>
+                    <th>Marseille</th>
+                    <th>550</th>
+                    <th><button>🔍</button></th>
+                </tr>
+                <tr>
+                    <th>12/11/2023</th>
+                    <th>Lyon</th>
+                    <th>430</th>
+                    <th><button>🔍</button></th>
+                </tr>
+                <tr>
+                    <th>05/06/2022</th>
+                    <th>Paris</th>
+                    <th>300</th>
+                    <th><button>🔍</button></th>
+                </tr>
+                <tr>
+                    <th>19/03/2024</th>
+                    <th>Toulouse</th>
+                    <th>620</th>
+                    <th><button>🔍</button></th>
+                </tr>
+                <tr>
+                    <th>15/08/2023</th>
+                    <th>Nice</th>
+                    <th>480</th>
+                    <th><button>🔍</button></th>
+                </tr>
+            </table>
         </div>
         <nav>
             <a href="index.html"><button>🏠 Accueil</button></a>

@@ -65,7 +65,7 @@ testDbConnection();
 // Récupérer les utilisateurs depuis la base de données
 app.get("/users", async (req, res) => {
     try {
-        const result = await pool.query('SELECT * FROM users');
+        const result = await pool.query('SELECT * FROM users ORDER BY first_name');
         res.json(result.rows);
     } catch (err) {
         console.error(err);
