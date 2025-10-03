@@ -80,7 +80,7 @@ app.get("/users", async (req, res) => {
 
 
 // Récupérer un utilisateur par ID
-app.get("/user/:id", async (req, res) => {
+app.get("/users/:id", async (req, res) => {
     try {
         const id = Number(req.params.id);
         const result = await pool.query('SELECT * FROM users WHERE id = $1', [id]);
