@@ -1,13 +1,25 @@
+#homeIcon {
+  justify-self: start;
+  font-size: 40px;
+  font-weight: 700;
+  align-items: center;
+  color: var(--header-color, rgb(249, 3, 3));
+}
+
+.enceColor {
+  color: var(--header-color, rgb(18, 0, 217));
+}
+
 #end {
   display: flex;
   flex-direction:row;
-  background-color: #232121;
+  background-color: #060b99;
   justify-content: center;
   text-align: left;
 }
 
 #end h4 {
-  color: var(--header-color, orange);
+  color: var(--header-color, rgb(255, 254, 252));
   display: flex;
   width: 100%;
 }
