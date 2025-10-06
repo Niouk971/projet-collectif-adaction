@@ -22,28 +22,29 @@ document.addEventListener('DOMContentLoaded', async () => {
             console.error("Erreur lors de la récupération de l'utilisateur :", error);
             userSpan.textContent = defaultUserName;
         }
+
+        try {
+            // Fetch collects for the specific user
+            const collectsResponse = await fetch(`http://localhost:3000/collects?userId=${userId}`);
+            if (!collectsResponse.ok) {
+                throw new Error(`Erreur HTTP: ${collectsResponse.status}`);
+            }
+            const collects = await collectsResponse.json();
+            // Populate the table with the collects data
+            collects.forEach(collect => {
+                collectsTable.innerHTML += `<tr>
+                    <td>${collect.city_id}</td>
+                    <td>${collect.date}</td>
+                    <td>${collect.collected_trashes}</td>
+                    <td><table>🔍</table></td>
+                </tr>`;
+            });
+
+        } catch (error) {
+            console.error('Erreur lors de la récupération des données de collecte :', error);
+            alert('Une erreur est survenue lors de la récupération des données de collecte. Veuillez réessayer.');
+        }
     } else {
         userSpan.textContent = defaultUserName;
-    };
-});
-
-document.addEventListener('DOMContentLoaded', async () => {
-    try {
-        const response = await fetch('http://localhost:3000/collects');
-        if (!response.ok) {
-            throw new Error(`Erreur HTTP: ${response.status}`);
-        }
-        const collects = await response.json();
-        for (const collect of collects) {
-            collectsTable.innerHTML += `<tr>
-                <td>${collect.user_id}</td>
-                <td>${collect.city_id}</td>
-                <td>${collect.date}</td>
-            </tr>`;
-        };
-
-    } catch (error) {
-        console.error('Erreur lors de la récupération des données utilisateur :', error);
-        alert('Une erreur est survenue. Veuillez réessayer.');
     };
 });
