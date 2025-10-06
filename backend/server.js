@@ -65,7 +65,17 @@ testDbConnection();
 // Récupérer les utilisateurs depuis la base de données
 app.get("/users", async (req, res) => {
     try {
-        const result = await pool.query('SELECT * FROM users ORDER BY first_name');
+        const result = await pool.query('SELECT * FROM users');
+        res.json(result.rows);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Erreur serveur" });
+    }
+});
+
+app.get("/collects", async (req, res) => {
+    try {
+        const result = await pool.query('SELECT * FROM collects');
         res.json(result.rows);
     } catch (err) {
         console.error(err);
