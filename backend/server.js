@@ -58,30 +58,27 @@ const testDbConnection = async () => {
 testDbConnection();
 
 
+// GET générique pour n'importe quelle table
+app.get("/:table", async (req, res) => {
+    const { table } = req.params;
+
+    // Vérification simple pour éviter l'injection SQL
+    const validTables = ["users", "trashes", "cities", "collects"];
+    if (!validTables.includes(table)) {
+        return res.status(400).json({ error: "Table non autorisée" });
+    }
+
+    try {
+        const result = await pool.query(`SELECT * FROM ${table} ORDER BY 1`);
+        res.json(result.rows);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Erreur serveur" });
+    }
+});
 
 // ========================== ROUTES : USERS  ==========================
 
-
-// Récupérer les utilisateurs depuis la base de données
-app.get("/users", async (req, res) => {
-    try {
-        const result = await pool.query('SELECT * FROM users');
-        res.json(result.rows);
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ error: "Erreur serveur" });
-    }
-});
-
-app.get("/collects", async (req, res) => {
-    try {
-        const result = await pool.query('SELECT * FROM collects');
-        res.json(result.rows);
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ error: "Erreur serveur" });
-    }
-});
 
 // Exemple de requête curl pour tester la récupération des utilisateurs
 
@@ -236,17 +233,6 @@ app.delete("/users/:id", async (req, res) => {
 
 // ========================== ROUTES : TRASHES  ==========================
 
-
-// Récupérer les déchets depuis la base de données
-app.get("/trashes", async (req, res) => {
-    try {
-        const result = await pool.query('SELECT * FROM trashes');
-        res.json(result.rows);
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ error: "Erreur serveur" });
-    }
-});
 
 // 🔍 Récupérer un déchet par son ID
 app.get("/trashes/:id", async (req, res) => {
