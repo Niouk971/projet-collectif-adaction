@@ -1,7 +1,15 @@
+/* RESET DE BASE (À placer tout en haut de ton fichier CSS) */
+body, html {
+    margin: 0; /* SUPPRIME TOUTES LES MARGES EXTÉRIEURES PAR DÉFAUT (Haut, droite, bas, gauche) */
+    padding: 0; /* SUPPRIME TOUT PADDING INTÉRIEUR PAR DÉFAUT */
+    width: 100%; /* S'assure que le contenu prend bien 100% de la fenêtre */
+    min-height: 100%;
+}
+
 #homeIcon {
   justify-self: start;
   font-size: 40px;
-  font-weight: 700;
+  font-weight:700;
   align-items: center;
   color: var(--header-color, rgb(249, 3, 3));
 }
@@ -11,11 +19,23 @@
 }
 
 #end {
+    background-color: #3cd46f; /* Couleur de fond bleu foncé de ton image */
+    width: 100%;
+    color: white;
+    padding: 30px 5%; /* Espacement interne pour les côtés et le haut/bas */
+    margin: 0px;
+    display: flex; /* Active Flexbox */
+    flex-wrap: wrap; /* Permet aux colonnes de passer à la ligne sur mobile */
+    gap: 40px; /* Ajoute un espace entre les colonnes */
+    align-items: flex-start; /* Aligne le contenu en haut des colonnes */
+}
+
+
+#end h1 {
+  color: var(--header-color, rgb(255, 254, 252));
   display: flex;
-  flex-direction:row;
-  background-color: #060b99;
-  justify-content: center;
-  text-align: left;
+  width: 100%;
+  align-items: center;
 }
 
 #end h4 {
@@ -44,7 +64,28 @@
 
 }
 
+.footer-colonne {
+    /* Ceci garantit que les colonnes se répartissent l'espace */
+    flex: 1 1 250px; 
+    
+    display: flex;
+    flex-direction: column;
+}
 
+.footer-copyright {
+flex-basis: 100%; 
+order: 99;
+margin-top: 30px;
+text-align: center; 
+font-size: 0.8em;
+padding-top: 15px; /* Ligne de séparation visuelle (optionnel) */
+border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.footer-copyright h6 {
+    margin: 5px 0;
+    font-weight: normal;
+}
 
 @media screen and (max-width: 720px) {
   .gallery_column {
