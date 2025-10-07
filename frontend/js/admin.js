@@ -34,10 +34,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             throw new Error(`Erreur HTTP: ${response.status}`);
         }
         const users = await response.json();
-        for (const user of users) {
+        for (const user of users.data) {
             adminTable.innerHTML += `<tr>
                 <td>${user.first_name} ${user.last_name}</td>
-                <td>{user.city}</td>
+                <td>${user.city}</td>
                 <td><a href="mailto:${user.email}">${user.email}</a></td>
                 <td>${user.score}</td>
                 <td>${user.created_at}</td>

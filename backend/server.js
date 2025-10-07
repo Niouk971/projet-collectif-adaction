@@ -1,10 +1,7 @@
 // ========================== INSTALL PACKAGES  ==========================
 
-
 // npm init
 // npm install express nodemon cors pg dotenv morgan
-
-
 
 // ========================== IMPORTS & CONFIG  ==========================
 
@@ -53,7 +50,6 @@ testDbConnection();
 
 
 // ========================== ROUTES : GET  ==========================
-
 
 // GET générique pour n'importe quelle table
 // app.get("/:table", async (req, res) => {

@@ -1,5 +1,6 @@
 const userSpan = document.querySelector('#userSpan');
 const collectsTable = document.querySelector('#collectsTable');
+const citySelector = document.querySelector('#citySelector');
 
 document.addEventListener('DOMContentLoaded', async () => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -21,30 +22,42 @@ document.addEventListener('DOMContentLoaded', async () => {
         } catch (error) {
             console.error("Erreur lors de la récupération de l'utilisateur :", error);
             userSpan.textContent = defaultUserName;
-        }
+        };
+    };
 
-        try {
-            // Fetch collects for the specific user
-            const collectsResponse = await fetch(`http://localhost:3000/collects?userId=${userId}`);
-            if (!collectsResponse.ok) {
-                throw new Error(`Erreur HTTP: ${collectsResponse.status}`);
-            }
-            const collects = await collectsResponse.json();
-            // Populate the table with the collects data
-            collects.forEach(collect => {
-                collectsTable.innerHTML += `<tr>
+    try {
+        // Fetch collects for the specific user
+        const collectsResponse = await fetch(`http://localhost:3000/collects`);
+        if (!collectsResponse.ok) {
+            throw new Error(`Erreur HTTP: ${collectsResponse.status}`);
+        }
+        const collects = await collectsResponse.json();
+        // Populate the table with the collects data
+        for (const collect of collects.data){
+            collectsTable.innerHTML += `<tr>
                     <td>${collect.city_id}</td>
                     <td>${collect.date}</td>
                     <td>${collect.collected_trashes}</td>
                     <td><table>🔍</table></td>
                 </tr>`;
-            });
+        };
+    } catch (error) {
+        console.error('Erreur lors de la récupération des données de collecte :', error);
+        alert('Une erreur est survenue lors de la récupération des données de collecte. Veuillez réessayer.');
+    };
 
-        } catch (error) {
-            console.error('Erreur lors de la récupération des données de collecte :', error);
-            alert('Une erreur est survenue lors de la récupération des données de collecte. Veuillez réessayer.');
+    try {
+        const citiesResponse = await fetch('http://localhost:3000/cities');
+        if (!citiesResponse.ok) {
+            throw new Error(`Erreur HTTP: ${citiesResponse.status}`);
         }
-    } else {
-        userSpan.textContent = defaultUserName;
+        const cities = await citiesResponse.json();
+        // Populate the city selector with the cities
+        for (const city of cities.data) {
+            citySelector.innerHTML += `<option value="${city.id}">${city.name}</option>`;
+        };
+    } catch (error) {
+        console.error('Erreur lors de la récupération des villes :', error);
+        alert('Une erreur est survenue lors de la récupération des villes. Veuillez réessayer.');
     };
 });
