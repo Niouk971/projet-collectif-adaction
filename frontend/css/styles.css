@@ -1,15 +1,22 @@
 /* RESET DE BASE (À placer tout en haut de ton fichier CSS) */
 body, html {
+  display: flex;
     margin: 0; /* SUPPRIME TOUTES LES MARGES EXTÉRIEURES PAR DÉFAUT (Haut, droite, bas, gauche) */
     padding: 0; /* SUPPRIME TOUT PADDING INTÉRIEUR PAR DÉFAUT */
     width: 100%; /* S'assure que le contenu prend bien 100% de la fenêtre */
     min-height: 100%;
 }
 
+header {
+  display: flex;
+justify-content: center; 
+    padding: 20px 0; 
+}
+
 #homeIcon {
   display: flex;
   justify-self: center;
-  font-size: 40px;
+  font-size: 48px;
   font-weight:700;
   align-items: center;
   color: var(--header-color, rgb(249, 3, 3));
