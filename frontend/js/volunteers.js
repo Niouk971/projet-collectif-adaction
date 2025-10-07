@@ -71,8 +71,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         const trashes = await trashesResponse.json();
         console.log("voici la liste des déchets :", trashes);
         for (const trash of trashes.data) {
-            trashButtonsContainer.innerHTML += `<div><h3>${trash.emoji}</h3></div><div><button class="minus">-</button></div>
-            <div><span id="item-${itemNumber}"> 0</span> ${trash.trash_name} </br>(${trash.trash_score} points)</div><div><button class="plus">+</button>`;
+            trashButtonsContainer.innerHTML += `<div class="trashButtons"><div><h3>${trash.emoji}</h3></div><div><button class="minus">-</button></div>
+            <div><span id="item-${itemNumber}"> 0</span> ${trash.trash_name} </br>(${trash.trash_score} points)</div><div><button class="plus">+</button></div></div>`;
         }
     } catch (error) {
         console.error('Erreur lors de la récupération des types de déchets :', error);
