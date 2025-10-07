@@ -1,17 +1,7 @@
 // ========================== INSTALL PACKAGES  ==========================
 
-
 // npm init
-// npm install express
-// npm install nodemon
-// npm install cors
-// npm install pg
-// npm install dotenv
-
-// Pour les logs des requêtes dans le terminal
-// npm install morgan
-
-
+// npm install express nodemon cors pg dotenv morgan
 
 // ========================== IMPORTS & CONFIG  ==========================
 
@@ -58,42 +48,134 @@ const testDbConnection = async () => {
 testDbConnection();
 
 
+
+// ========================== ROUTES : GET  ==========================
+
 // GET générique pour n'importe quelle table
+// app.get("/:table", async (req, res) => {
+//     const { table } = req.params;
+
+//     // Vérification simple pour éviter l'injection SQL
+//     const validTables = ["users", "trashes", "cities", "collects"];
+//     if (!validTables.includes(table)) {
+//         return res.status(400).json({ error: "Table non autorisée" });
+//     }
+
+//     try {
+//         const result = await pool.query(`SELECT * FROM ${table} ORDER BY 1`);
+//         res.json(result.rows);
+//     } catch (err) {
+//         console.error(err);
+//         res.status(500).json({ error: "Erreur serveur" });
+//     }
+// });
+
+
 app.get("/:table", async (req, res) => {
     const { table } = req.params;
+    const filters = req.query;
 
-    // Vérification simple pour éviter l'injection SQL
+    // 🔒 Liste blanche pour éviter l'injection SQL
     const validTables = ["users", "trashes", "cities", "collects"];
     if (!validTables.includes(table)) {
         return res.status(400).json({ error: "Table non autorisée" });
     }
 
+    const whereClauses = []; // Liste des conditions WHERE
+    const values = [];       // Valeurs associées aux paramètres SQL ($1, $2, ...)
+    let i = 1;               // Compteur pour les placeholders SQL
+
+    // 🔍 Construction dynamique des filtres
+    for (const [key, value] of Object.entries(filters)) {
+        // ⏩ Ignorer les paramètres de tri/pagination
+        if (["sort", "order", "limit", "offset"].includes(key)) continue;
+
+        // 🔧 Si le filtre contient un opérateur (ex: price[gt]=10)
+        if (typeof value === "object") {
+            for (const [op, val] of Object.entries(value)) {
+                let sqlOp;
+                switch (op) {
+                    case "gt": sqlOp = ">"; break;
+                    case "lt": sqlOp = "<"; break;
+                    case "gte": sqlOp = ">="; break;
+                    case "lte": sqlOp = "<="; break;
+                    case "like": sqlOp = "LIKE"; break;
+                    default:
+                        return res.status(400).json({ error: `Opérateur non supporté: ${op}` });
+                }
+                whereClauses.push(`${key} ${sqlOp} $${i}`);
+                values.push(op === "like" ? `%${val}%` : val);
+                i++;
+            }
+        } else {
+            // 🔧 Filtre simple (ex: status=pending)
+            whereClauses.push(`${key} = $${i}`);
+            values.push(value);
+            i++;
+        }
+    }
+
+    // 🧱 Construction de la clause WHERE
+    const whereSQL = whereClauses.length ? `WHERE ${whereClauses.join(" AND ")}` : "";
+
+    // 🔃 Tri des résultats
+    const sort = filters.sort || "id";
+    const order = (filters.order || "asc").toUpperCase();
+    const orderSQL = `ORDER BY ${sort} ${["ASC", "DESC"].includes(order) ? order : "ASC"}`;
+
+    // 📄 Pagination
+    const limit = parseInt(filters.limit) || 10;
+    const offset = parseInt(filters.offset) || 0;
+    const paginationSQL = `LIMIT ${limit} OFFSET ${offset}`;
+
+    // 📦 Requête principale + requête de comptage
+    const query = `SELECT * FROM ${table} ${whereSQL} ${orderSQL} ${paginationSQL}`;
+    const countQuery = `SELECT COUNT(*) FROM ${table} ${whereSQL}`;
+
     try {
-        const result = await pool.query(`SELECT * FROM ${table} ORDER BY 1`);
-        res.json(result.rows);
+        // 🧠 Exécuter les deux requêtes en parallèle
+        const [dataResult, countResult] = await Promise.all([
+            pool.query(query, values),
+            pool.query(countQuery, values)
+        ]);
+
+        const totalCount = parseInt(countResult.rows[0].count); // 🔢 Nombre total d'éléments
+        const hasNextPage = offset + limit < totalCount;        // ➕ Y a-t-il une page suivante ?
+        const currentPage = Math.floor(offset / limit) + 1;     // 📍 Page actuelle
+
+        // ✅ Réponse structurée
+        res.json({
+            total_count: totalCount,
+            current_page: currentPage,
+            has_next_page: hasNextPage,
+            data: dataResult.rows
+        });
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: "Erreur serveur" });
     }
 });
 
-// ========================== ROUTES : USERS  ==========================
 
+app.get("/:table/:id", async (req, res) => {
+    const { table, id } = req.params;
+    const numericId = Number(id);
 
-// Exemple de requête curl pour tester la récupération des utilisateurs
+    // Liste blanche pour éviter l'injection SQL
+    const validTables = ["users", "products", "orders", "categories"];
+    if (!validTables.includes(table)) {
+        return res.status(400).json({ error: "Table non autorisée" });
+    }
 
-// curl -X GET "http://localhost:3000/users" \
-// -H "Content-Type: application/json"
+    if (isNaN(numericId)) {
+        return res.status(400).json({ error: "ID invalide" });
+    }
 
-
-// Récupérer un utilisateur par ID
-app.get("/users/:id", async (req, res) => {
     try {
-        const id = Number(req.params.id);
-        const result = await pool.query('SELECT * FROM users WHERE id = $1', [id]);
+        const result = await pool.query(`SELECT * FROM ${table} WHERE id = $1`, [numericId]);
 
         if (result.rows.length === 0) {
-            return res.status(404).json({ error: `Utilisateur id=${id} non trouvé` });
+            return res.status(404).json({ error: `${table} id=${id} non trouvé` });
         }
 
         res.json(result.rows[0]);
@@ -103,10 +185,25 @@ app.get("/users/:id", async (req, res) => {
     }
 });
 
-// Exemple de requête curl pour tester la récupération d'un utilisateur par ID
 
-// curl -X GET "http://localhost:3000/user/1" \
-// -H "Content-Type: application/json"
+// Récupérer un utilisateur par ID
+// app.get("/users/:id", async (req, res) => {
+//     try {
+//         const id = Number(req.params.id);
+//         const result = await pool.query('SELECT * FROM users WHERE id = $1', [id]);
+
+//         if (result.rows.length === 0) {
+//             return res.status(404).json({ error: `Utilisateur id=${id} non trouvé` });
+//         }
+
+//         res.json(result.rows[0]);
+//     } catch (err) {
+//         console.error(err);
+//         res.status(500).json({ error: "Erreur serveur" });
+//     }
+// });
+
+
 
 
 // Récupérer le nombre total d'utilisateurs
@@ -120,10 +217,7 @@ app.get("/users/count", async (req, res) => {
     }
 });
 
-// Exemple de requête curl pour tester la récupération du nombre d'utilisateurs
 
-// curl -X GET "http://localhost:3000/users/count" \
-// -H "Content-Type: application/json"
 
 
 // Créer un nouvel utilisateur
@@ -164,15 +258,6 @@ app.post("/users", async (req, res) => {
     }
 });
 
-// Exemple de requête curl pour tester la création d'un utilisateur
-
-// curl -X POST "http://localhost:3000/users" \
-// -H "Content-Type: application/json" \
-// -d '{
-//     "first_name": "Marie",
-//     "last_name": "Dupont",
-//     "email": "marie.dupont@example.com"
-// }'
 
 
 // Modifier un utilisateur existant
@@ -197,15 +282,7 @@ app.put("/users/:id", async (req, res) => {
     }
 });
 
-// Exemple de requête curl pour tester la mise à jour d'un utilisateur
 
-// curl -X PUT http://localhost:3000/users/22 \
-//   -H "Content-Type: application/json" \
-//   -d '{
-//     "first_name": "Alice",
-//     "last_name": "Dupont",
-//     "email": "alice.dupont@example.com"
-//   }'
 
 
 // Supprimer un utilisateur

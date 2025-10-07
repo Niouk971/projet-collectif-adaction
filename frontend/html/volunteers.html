@@ -6,123 +6,108 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Adaction - tableau de bord</title>
     <script defer src="../js/volunteers.js"></script>
-    <link rel="stylesheet" href="../css/styles.css"> 
+    <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/form.css">
 </head>
 
 <body>
     <header>
-         <h1 id="homeIcon">Ada<span class="enceColor">ction</span></h1>
+        <h1 id="homeIcon">Ada<span class="enceColor">ction</span></h1>
     </header>
-    <div>
+    <div id="dashboard"> <!-- Display none après le clic sur [Déclarer une nouvelle collecte] -->
         <h2><span id="userSpan">[User]</span>, voici votre tableau de bord</h2>
         <div id="tableContainer">
-            <table id="collectTable">
+            <table id="collectsTable">
                 <tr>
-                    <th>Date</th>
                     <th>Ville</th>
+                    <th>Date</th>
                     <th>Score</th>
-                    <th>Détails</th>
-                </tr>
-                <tr>
-                    <th>24/09/2025</th>
-                    <th>Marseille</th>
-                    <th>550</th>
-                    <th><button>🔍</button></th>
-                </tr>
-                <tr>
-                    <th>12/11/2023</th>
-                    <th>Lyon</th>
-                    <th>430</th>
-                    <th><button>🔍</button></th>
-                </tr>
-                <tr>
-                    <th>05/06/2022</th>
-                    <th>Paris</th>
-                    <th>300</th>
-                    <th><button>🔍</button></th>
-                </tr>
-                <tr>
-                    <th>19/03/2024</th>
-                    <th>Toulouse</th>
-                    <th>620</th>
-                    <th><button>🔍</button></th>
-                </tr>
-                <tr>
-                    <th>15/08/2023</th>
-                    <th>Nice</th>
-                    <th>480</th>
-                    <th><button>🔍</button></th>
+                    <th>Voir</th>
                 </tr>
             </table>
         </div>
-        <nav>
+        <div>
             <a href="index.html"><button>🏠 Accueil</button></a>
             <a href=""><button>➕ Déclarer une nouvelle collecte</button></a>
-        </nav>
+        </div>
+
+        <div id="newCollectForm"> <!-- display:none de base-->
+            <h2>Nouvelle collecte</h2>
+            <form>
+                <label for="collectCity">Ville de la collecte</label>
+                <select type="select" name="collectCity" id="citySelector"></select></br>
+                <label for="collectDate">Date de la collecte</label>
+                <input type="date" name="collectDate" id="collectDate">
+                <div id="trashButtonsContainer"></div>
+                <button type="submit">Enregistrer la collecte</button>
+            </form>
+        </div>
     </div>
+
+    <footer id="end">
+        <div class="footer-colonne">
+            <h4>Adaction</h4>
+            <h5 class="footer-mission">Notre mission est de nettoyer notre <br> planet afin qu'elle devienne à nouveau
+                bleue
+                <br> teintée de vert.
+            </h5>
+            <div class="social-icons">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="lucide lucide-facebook-icon lucide-facebook">
+                    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+                </svg>
+
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" strok
+                    e="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="lucide lucide-instagram-icon lucide-instagram">
+                    <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                    <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+                </svg>
+
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="lucide lucide-linkedin-icon lucide-linkedin">
+                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+                    <rect width="4" height="12" x="2" y="9" />
+                    <circle cx="4" cy="4" r="2" />
+                </svg>
+
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="lucide lucide-twitch-icon lucide-twitch">
+                    <path d="M21 2H3v16h5v4l4-4h5l4-4V2zm-10 9V7m5 4V7" />
+                </svg>
+
+            </div>
+        </div>
+
+        <div class="footer-colonne">
+            <h4>INFORMATIONS UTILES</h4>
+            <div class="footer-liens">
+                <a href="">FAQs</a> <br>
+                <a href="">Conseil de collecte</a> <br>
+                <a href="">Nous contacter</a> <br>
+                <a href="">Mentions légales</a>
+            </div>
+        </div>
+
+        <div class="footer-colonne">
+            <h4>CONTACT</h4>
+            <p>116 Rue du Faubourg Saint-Martin <br> 75010 Paris, France <br> Email: contact@adaction.fr <br> Tél:
+                +33 1 23 45 67 89
+            </p>
+        </div>
+
+        <div class="footer-copyright">
+            <h6> © 2025 Adaopte. Tous droits réservés.</h6>
+            <h6>Ce site a été développé dans le cadre d'un projet pour ADA Tech School. </h6>
+        </div>
+
+    </footer>
+
 </body>
-
-<footer id="end">
-    <div class="footer-colonne">
-        <h4>Adaction</h4>
-        <h5 class="footer-mission">Notre mission est de nettoyer notre <br> planet afin qu'elle devienne à nouveau bleue
-            <br> teintée de vert.</h5>
-        <div class="social-icons">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                stroke-linejoin="round" class="lucide lucide-facebook-icon lucide-facebook">
-                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
-            </svg>
-
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                viewBox="0 0 24 24" fill="none" strok
-                e="currentColor" stroke-width="2" stroke-linecap="round"
-                stroke-linejoin="round" class="lucide lucide-instagram-icon lucide-instagram">
-                <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
-                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
-                <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
-            </svg>
-
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                stroke-linejoin="round" class="lucide lucide-linkedin-icon lucide-linkedin">
-                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
-                <rect width="4" height="12" x="2" y="9" />
-                <circle cx="4" cy="4" r="2" />
-            </svg>
-
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                stroke-linejoin="round" class="lucide lucide-twitch-icon lucide-twitch">
-                <path d="M21 2H3v16h5v4l4-4h5l4-4V2zm-10 9V7m5 4V7" />
-            </svg>
-
-        </div>
-    </div>
-
-    <div class="footer-colonne">
-        <h4>INFORMATIONS UTILES</h4>
-        <div class="footer-liens">
-            <a href="">FAQs</a> <br>
-            <a href="">Conseil de collecte</a> <br>
-            <a href="">Nous contacter</a> <br>
-            <a href="">Mentions légales</a>
-        </div>
-    </div>
-
-    <div class="footer-colonne">
-        <h4>CONTACT</h4>
-        <p>116 Rue du Faubourg Saint-Martin <br> 75010 Paris, France <br> Email: contact@adaction.fr <br> Tél:
-            +33 1 23 45 67 89
-        </p>
-    </div>
-
-    <div class="footer-copyright">
-        <h6> © 2025 Adaopte. Tous droits réservés.</h6>
-        <h6>Ce site a été développé dans le cadre d'un projet pour ADA Tech School. </h6>
-    </div>
-
-</footer>
 
 </html>
