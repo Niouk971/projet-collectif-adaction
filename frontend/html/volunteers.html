@@ -34,7 +34,7 @@
         </div>
         <div>
             <a href="index.html"><button>🏠 Accueil</button></a>
-            <a href=""><button>➕ Déclarer une nouvelle collecte</button></a>
+            <button id="declareCollectButton">➕ Déclarer une nouvelle collecte</button>
         </div>
 
         <div id="newCollectForm"> <!-- display:none de base-->
@@ -45,6 +45,7 @@
                 <label for="collectDate">Date de la collecte</label>
                 <input type="date" name="collectDate" id="collectDate">
                 <div id="trashButtonsContainer"></div>
+                <button type="button" id="cancelButton">Annuler</button>
                 <button type="submit">Enregistrer la collecte</button>
             </form>
         </div>

@@ -1,22 +1,36 @@
 /* RESET DE BASE (À placer tout en haut de ton fichier CSS) */
+<<<<<<< HEAD
 body, html {
     margin: 0; /* SUPPRIME TOUTES LES MARGES EXTÉRIEURES PAR DÉFAUT (Haut, droite, bas, gauche) */
     padding: 0; /* SUPPRIME TOUT PADDING INTÉRIEUR PAR DÉFAUT */
     width: 100%; /* S'assure que le contenu prend bien 100% de la fenêtre */
     min-height: 100%;
+=======
+body,
+html {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  /* SUPPRIME TOUTES LES MARGES EXTÉRIEURES PAR DÉFAUT (Haut, droite, bas, gauche) */
+  padding: 0;
+  /* SUPPRIME TOUT PADDING INTÉRIEUR PAR DÉFAUT */
+  width: 100%;
+  /* S'assure que le contenu prend bien 100% de la fenêtre */
+  min-height: 100%;
+>>>>>>> 772754bbb895521d5f52112abb9b399fb0941bb8
 }
 
 header {
   display: flex;
-justify-content: center; 
-    padding: 20px 0; 
+  justify-content: center;
+  padding: 20px 0;
 }
 
 #homeIcon {
   display: flex;
   justify-self: center;
   font-size: 48px;
-  font-weight:700;
+  font-weight: 700;
   align-items: center;
   color: var(--header-color, rgb(249, 3, 3));
 }
@@ -26,15 +40,21 @@ justify-content: center;
 }
 
 #end {
-    background-color: #3cd46f; /* Couleur de fond bleu foncé de ton image */
-    width: 100%;
-    color: white;
-    padding: 30px 5%; /* Espacement interne pour les côtés et le haut/bas */
-    margin: 0px;
-    display: flex; /* Active Flexbox */
-    flex-wrap: wrap; /* Permet aux colonnes de passer à la ligne sur mobile */
-    gap: 40px; /* Ajoute un espace entre les colonnes */
-    align-items: flex-start; /* Aligne le contenu en haut des colonnes */
+  background-color: #3cd46f;
+  /* Couleur de fond bleu foncé de ton image */
+  width: 100%;
+  color: white;
+  padding: 30px 5%;
+  /* Espacement interne pour les côtés et le haut/bas */
+  margin: 0px;
+  display: flex;
+  /* Active Flexbox */
+  flex-wrap: wrap;
+  /* Permet aux colonnes de passer à la ligne sur mobile */
+  gap: 40px;
+  /* Ajoute un espace entre les colonnes */
+  align-items: flex-start;
+  /* Aligne le contenu en haut des colonnes */
 }
 
 
@@ -52,8 +72,8 @@ justify-content: center;
 }
 
 #end h5 {
-   color: var(--primary-color);
-   display: flex;
+  color: var(--primary-color);
+  display: flex;
   width: 100%;
 
 }
@@ -64,45 +84,48 @@ justify-content: center;
   width: 100%;
 }
 
-#end h6{
-  color:var(--primary-color);
+#end h6 {
+  color: var(--primary-color);
   display: inline-flexbox;
   width: 100%;
 
 }
 
 .footer-colonne {
-    /* Ceci garantit que les colonnes se répartissent l'espace */
-    flex: 1 1 250px; 
-    
-    display: flex;
-    flex-direction: column;
+  /* Ceci garantit que les colonnes se répartissent l'espace */
+  flex: 1 1 250px;
+
+  display: flex;
+  flex-direction: column;
 }
 
 .footer-copyright {
-flex-basis: 100%; 
-order: 99;
-margin-top: 30px;
-text-align: center; 
-font-size: 0.8em;
-padding-top: 15px; /* Ligne de séparation visuelle (optionnel) */
-border-top: 1px solid rgba(255, 255, 255, 0.2);
+  flex-basis: 100%;
+  order: 99;
+  margin-top: 30px;
+  text-align: center;
+  font-size: 0.8em;
+  padding-top: 15px;
+  /* Ligne de séparation visuelle (optionnel) */
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .footer-copyright h6 {
-    margin: 5px 0;
-    font-weight: normal;
+  margin: 5px 0;
+  font-weight: normal;
 }
 
 @media screen and (max-width: 720px) {
   .gallery_column {
-    display : flex;
+    display: flex;
     flex-direction: column;
 
   }
-};
+}
 
-.divAdopt{
+;
+
+.divAdopt {
   height: 100px;
   width: 100px;
 }
