@@ -1,10 +1,7 @@
 // ========================== INSTALL PACKAGES  ==========================
 
-
 // npm init
 // npm install express nodemon cors pg dotenv morgan
-
-
 
 // ========================== IMPORTS & CONFIG  ==========================
 

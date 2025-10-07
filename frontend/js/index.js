@@ -11,7 +11,7 @@ async function fetchUsers() {
         console.log("voici la liste des usagers :", users);
 
         userSelector.innerHTML = `<option value="0">-- Choisissez votre nom dans la liste --</option>`
-        for (const user of users) {
+        for (const user of users.data) {
             const adminTag = user.is_admin ? " (admin)" : "";
             const displayName = `${user.first_name} ${user.last_name}${adminTag}`;
             userSelector.innerHTML +=
@@ -21,6 +21,7 @@ async function fetchUsers() {
         console.error("Erreur :", err);
     };
 };
+
 
 fetchUsers();
 
