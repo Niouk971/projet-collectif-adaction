@@ -1,6 +1,8 @@
 const userSpan = document.querySelector('#userSpan');
 const collectsTable = document.querySelector('#collectsTable');
 const citySelector = document.querySelector('#citySelector');
+const trashButtonsContainer = document.querySelector('#trashButtonsContainer');
+let itemNumber = 0;
 
 document.addEventListener('DOMContentLoaded', async () => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -33,7 +35,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
         const collects = await collectsResponse.json();
         // Populate the table with the collects data
-        for (const collect of collects.data){
+        for (const collect of collects.data) {
             collectsTable.innerHTML += `<tr>
                     <td>${collect.city_id}</td>
                     <td>${collect.date}</td>
@@ -59,5 +61,20 @@ document.addEventListener('DOMContentLoaded', async () => {
     } catch (error) {
         console.error('Erreur lors de la récupération des villes :', error);
         alert('Une erreur est survenue lors de la récupération des villes. Veuillez réessayer.');
+    };
+
+    try {
+        const trashesResponse = await fetch('http://localhost:3000/trashes');
+        if (!trashesResponse.ok) {
+            throw new Error(`Erreur HTTP: ${trashesResponse.status}`);
+        }
+        const trashes = await trashesResponse.json();
+        console.log("voici la liste des déchets :", trashes);
+        for (const trash of trashes.data) {
+            trashButtonsContainer.innerHTML += `<div><h3>${trash.emoji}</h3><button class="minus">-</button><span id="item-${itemNumber}"> 0</span> ${trash.trash_name} <button class="plus">+</button></br>(${trash.trash_score} points)</div>`;
+        }
+    } catch (error) {
+        console.error('Erreur lors de la récupération des types de déchets :', error);
+        alert('Une erreur est survenue lors de la récupération des types de déchets. Veuillez réessayer.');
     };
 });
