@@ -2,7 +2,24 @@ const userSpan = document.querySelector('#userSpan');
 const collectsTable = document.querySelector('#collectsTable');
 const citySelector = document.querySelector('#citySelector');
 const trashButtonsContainer = document.querySelector('#trashButtonsContainer');
+
+
 let itemNumber = 0;
+
+document.addEventListener('DOMContentLoaded', function () {
+    const declareCollectButton = document.getElementById('declareCollectButton');
+    const dashboard = document.getElementById('dashboard');
+
+    declareCollectButton.addEventListener('click', function () {
+        dashboard.style.display = 'none';
+    });
+
+    const cancelButton = document.getElementById('cancelButton');
+
+    cancelButton.addEventListener('click', function () {
+        window.location.reload();
+    });
+});
 
 document.addEventListener('DOMContentLoaded', async () => {
     const urlParams = new URLSearchParams(window.location.search);

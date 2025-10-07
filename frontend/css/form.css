@@ -1,4 +1,4 @@
-#newCollectForm{
-    display : flex;
-    flex-direction : column;
-};
+#newCollectForm {
+    display: none;
+    flex-direction: column;
+}
