@@ -55,26 +55,6 @@ testDbConnection();
 // ========================== ROUTES : GET  ==========================
 
 
-// GET générique pour n'importe quelle table
-// app.get("/:table", async (req, res) => {
-//     const { table } = req.params;
-
-//     // Vérification simple pour éviter l'injection SQL
-//     const validTables = ["users", "trashes", "cities", "collects"];
-//     if (!validTables.includes(table)) {
-//         return res.status(400).json({ error: "Table non autorisée" });
-//     }
-
-//     try {
-//         const result = await pool.query(`SELECT * FROM ${table} ORDER BY 1`);
-//         res.json(result.rows);
-//     } catch (err) {
-//         console.error(err);
-//         res.status(500).json({ error: "Erreur serveur" });
-//     }
-// });
-
-
 app.get("/:table", async (req, res) => {
     const { table } = req.params;
     const filters = req.query;
@@ -190,148 +170,122 @@ app.get("/:table/:id", async (req, res) => {
 });
 
 
-// Récupérer un utilisateur par ID
-// app.get("/users/:id", async (req, res) => {
-//     try {
-//         const id = Number(req.params.id);
-//         const result = await pool.query('SELECT * FROM users WHERE id = $1', [id]);
 
-//         if (result.rows.length === 0) {
-//             return res.status(404).json({ error: `Utilisateur id=${id} non trouvé` });
-//         }
-
-//         res.json(result.rows[0]);
-//     } catch (err) {
-//         console.error(err);
-//         res.status(500).json({ error: "Erreur serveur" });
-//     }
-// });
+// ========================== ROUTE : POST  ==========================
 
 
+app.post("/:table", async (req, res) => {
+    const { table } = req.params;
+    const data = req.body;
 
-
-// Récupérer le nombre total d'utilisateurs
-app.get("/users/count", async (req, res) => {
-    try {
-        const result = await pool.query('SELECT COUNT(*) FROM users');
-        res.json({ count: parseInt(result.rows[0].count) });
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ error: "Erreur serveur" });
+    const validTables = ["users", "trashes", "cities", "collects"];
+    if (!validTables.includes(table)) {
+        return res.status(400).json({ error: "Table non autorisée" });
     }
-});
 
+    const keys = Object.keys(data);
+    const values = Object.values(data);
+    const placeholders = keys.map((_, i) => `$${i + 1}`);
 
+    const query = `INSERT INTO ${table} (${keys.join(", ")}) VALUES (${placeholders.join(", ")}) RETURNING *`;
 
-
-// Créer un nouvel utilisateur
-app.post("/users", async (req, res) => {
     try {
-        console.log('Received body:', req.body);
-        
-        const { first_name, last_name, email } = req.body;
-        if (!first_name || !last_name || !email) {
-            return res.status(400).json({ 
-                error: "Les champs first_name, last_name et email sont requis",
-                received: req.body 
-            });
-        }
-        
-        const result = await pool.query(
-            `INSERT INTO users (
-                first_name, 
-                last_name, 
-                email,
-                is_admin,
-                score,
-                created_at
-            ) VALUES ($1, $2, $3, DEFAULT, DEFAULT, CURRENT_TIMESTAMP) RETURNING *`,
-            [first_name, last_name, email]
-        );
-        
+        const result = await pool.query(query, values);
         res.status(201).json(result.rows[0]);
     } catch (err) {
-        console.error('Detailed error:', err);
-        if (err.code === '23505') {
-            return res.status(409).json({ error: "Cet email existe déjà" });
-        }
-        res.status(500).json({ 
-            error: "Erreur serveur",
-            details: err.message 
-        });
+        console.error(err);
+        res.status(500).json({ error: "Erreur lors de la création" });
     }
 });
 
 
 
-// Modifier un utilisateur existant
-app.put("/users/:id", async (req, res) => {
+// ========================== ROUTE : PUT  ==========================
+
+
+app.put("/:table/:id", async (req, res) => {
+    const { table, id } = req.params;
+    const data = req.body;
+
+    const validTables = ["users", "trashes", "cities", "collects"];
+    if (!validTables.includes(table)) {
+        return res.status(400).json({ error: "Table non autorisée" });
+    }
+
+    const keys = Object.keys(data);
+    const values = Object.values(data);
+    const updates = keys.map((key, i) => `${key} = $${i + 1}`);
+
+    const query = `UPDATE ${table} SET ${updates.join(", ")} WHERE id = $${keys.length + 1} RETURNING *`;
+
     try {
-        const id = Number(req.params.id);
-        const { first_name, last_name, email } = req.body;
-
-        const result = await pool.query(
-            'UPDATE users SET first_name = $1, last_name = $2, email = $3 WHERE id = $4 RETURNING *',
-            [first_name, last_name, email, id]
-        );
-
+        const result = await pool.query(query, [...values, id]);
         if (result.rows.length === 0) {
-            return res.status(404).json({ error: `Utilisateur id=${id} non trouvé` });
+            return res.status(404).json({ error: `id=${id} non trouvé` });
         }
-
         res.json(result.rows[0]);
     } catch (err) {
         console.error(err);
-        res.status(500).json({ error: "Erreur serveur" });
+        res.status(500).json({ error: "Erreur lors de la mise à jour" });
     }
 });
 
 
 
+// ========================== ROUTE : PATCH  ==========================
 
-// Supprimer un utilisateur
-app.delete("/users/:id", async (req, res) => {
-    try {
-        const id = Number(req.params.id);
-        const result = await pool.query('DELETE FROM users WHERE id = $1 RETURNING *', [id]);
 
-        if (result.rows.length === 0) {
-            return res.status(404).json({ error: `Utilisateur id=${id} non trouvé` });
-        }
+app.patch("/:table/:id", async (req, res) => {
+    const { table, id } = req.params;
+    const data = req.body;
 
-        res.json({ message: `Utilisateur id=${id} supprimé` });
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ error: "Erreur serveur" });
+    const validTables = ["users", "trashes", "cities", "collects"];
+    if (!validTables.includes(table)) {
+        return res.status(400).json({ error: "Table non autorisée" });
     }
-});
 
-// Exemple de requête curl pour tester la suppression d'un utilisateur
+    const keys = Object.keys(data);
+    const values = Object.values(data);
+    const updates = keys.map((key, i) => `${key} = $${i + 1}`);
 
-// curl -X DELETE "http://localhost:3000/users/1"
+    const query = `UPDATE ${table} SET ${updates.join(", ")} WHERE id = $${keys.length + 1} RETURNING *`;
 
-
-
-// ========================== ROUTES : TRASHES  ==========================
-
-
-// 🔍 Récupérer un déchet par son ID
-app.get("/trashes/:id", async (req, res) => {
     try {
-        const id = Number(req.params.id);
-        const result = await pool.query(
-            'SELECT * FROM trashes WHERE id = $1',
-            [id]
-        );
-
+        const result = await pool.query(query, [...values, id]);
         if (result.rows.length === 0) {
-            return res.status(404).json({ error: `Déchet id=${id} non trouvé` });
+            return res.status(404).json({ error: `id=${id} non trouvé` });
         }
-
         res.json(result.rows[0]);
     } catch (err) {
-        console.error("Erreur lors de la récupération du déchet :", err);
-        res.status(500).json({ error: "Erreur serveur" });
+        console.error(err);
+        res.status(500).json({ error: "Erreur lors du patch" });
+    }
+});
+
+
+
+// ========================== ROUTE : DELETE  ==========================
+
+
+app.delete("/:table/:id", async (req, res) => {
+    const { table, id } = req.params;
+
+    const validTables = ["users", "trashes", "cities", "collects"];
+    if (!validTables.includes(table)) {
+        return res.status(400).json({ error: "Table non autorisée" });
+    }
+
+    const query = `DELETE FROM ${table} WHERE id = $1 RETURNING *`;
+
+    try {
+        const result = await pool.query(query, [id]);
+        if (result.rows.length === 0) {
+            return res.status(404).json({ error: `id=${id} non trouvé` });
+        }
+        res.json({ deleted: result.rows[0] });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Erreur lors de la suppression" });
     }
 });
 
