@@ -1,6 +1,13 @@
 const userSpan = document.querySelector('#userSpan');
 const adminTable = document.querySelector('#adminTable');
 const citySelector = document.querySelector('#citySelector');
+const cancelButton = document.querySelector('#cancelButton');
+
+const reloadPage = () => {
+    window.location.href = window.location.href;
+};
+
+cancelButton.addEventListener('click', reloadPage);
 
 // affiche le prénom de l'usager connecté
 document.addEventListener('DOMContentLoaded', async () => {

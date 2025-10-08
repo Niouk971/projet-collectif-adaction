@@ -5,8 +5,13 @@ const trashButtonsContainer = document.querySelector('#trashButtonsContainer');
 const cancelButton = document.querySelector('#cancelButton');
 const buttonMinus = document.getElementsByClassName('minus');
 const buttonPlus = document.getElementsByClassName('plus');
-
 let itemNumber = 0;
+
+const reloadPage = () => {
+    window.location.href = window.location.href;
+};
+
+cancelButton.addEventListener('click', reloadPage);
 
 // affiche le prénom de l'usager connecté
 document.addEventListener('DOMContentLoaded', async () => {
@@ -98,7 +103,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             throw new Error(`Erreur HTTP: ${citiesResponse.status}`);
         }
         const cities = await citiesResponse.json();
-        
+
         // Populate the city selector with the cities
         for (const city of cities.data) {
             citySelector.innerHTML += `<option value="${city.id}">${city.name}</option>`;
@@ -125,10 +130,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         alert('Une erreur est survenue lors de la récupération des types de déchets. Veuillez réessayer.');
     };
 });
-
-const reloadPage = () => {
-    window.location.reload();
-};
 
 const updateItemCount = (index, delta) => {
     const itemSpan = document.getElementById(`item-${index}`);
