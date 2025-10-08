@@ -50,3 +50,4 @@ document.addEventListener('DOMContentLoaded', async () => {
         alert('Une erreur est survenue. Veuillez réessayer.');
     };
 });
+

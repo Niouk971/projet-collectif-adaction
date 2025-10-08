@@ -147,8 +147,6 @@ trashButtonsContainer.addEventListener('click', (event) => {
     }
 });
 
-// COPILOT COMMENCE ICI
-
 newCollectFormElem.addEventListener('submit', async (event) => {
     event.preventDefault();
 
