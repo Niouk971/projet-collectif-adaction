@@ -109,11 +109,24 @@ app.get("/:table", async (req, res) => {
     // 📄 Pagination
     const limit = parseInt(filters.limit) || null;
     const offset = parseInt(filters.offset) || 0;
-    const paginationSQL = `LIMIT ${limit} OFFSET ${offset}`;
+    const paginationSQL = limit ? `LIMIT ${limit} OFFSET ${offset}` : "";
 
     // 📦 Requête principale + requête de comptage
-    const query = `SELECT * FROM ${table} ${whereSQL} ${orderSQL} ${paginationSQL}`;
-    const countQuery = `SELECT COUNT(*) FROM ${table} ${whereSQL}`;
+    let query = `SELECT * FROM ${table} ${whereSQL} ${orderSQL} ${paginationSQL}`;
+    let countQuery = `SELECT COUNT(*) FROM ${table} ${whereSQL}`;
+
+    if (table === "collects") {
+        query = `
+            SELECT c.*, ci.name AS city_name
+            FROM collects c
+            JOIN cities ci ON c.city_id = ci.id
+            ${whereSQL} ${orderSQL} ${paginationSQL}
+        `;
+        countQuery = `SELECT COUNT(*) FROM collects c ${whereSQL}`;
+    } else {
+        query = `SELECT * FROM ${table} ${whereSQL} ${orderSQL} ${paginationSQL}`;
+        countQuery = `SELECT COUNT(*) FROM ${table} ${whereSQL}`;
+    }
 
     try {
         // 🧠 Exécuter les deux requêtes en parallèle
@@ -134,8 +147,8 @@ app.get("/:table", async (req, res) => {
             data: dataResult.rows
         });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ error: "Erreur serveur" });
+        console.error("Erreur SQL:", err.message, err.stack);
+        res.status(500).json({ error: "Erreur serveur", details: err.message });
     }
 });
 
@@ -152,6 +165,20 @@ app.get("/:table/:id", async (req, res) => {
 
     if (isNaN(numericId)) {
         return res.status(400).json({ error: "ID invalide" });
+    }
+
+    let query;
+    let values = [numericId];
+
+    if (table === "collects") {
+        query = `
+            SELECT c.*, ci.name AS city_name
+            FROM collects c
+            JOIN cities ci ON c.city_id = ci.id
+            WHERE c.id = $1
+        `;
+    } else {
+        query = `SELECT * FROM ${table} WHERE id = $1`;
     }
 
     try {
@@ -295,5 +322,5 @@ app.delete("/:table/:id", async (req, res) => {
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`🚀 Serveur lancé sur le port ${PORT}`);
+    console.log(`🚀 Serveur lancé sur le port ${PORT}`);
 });
