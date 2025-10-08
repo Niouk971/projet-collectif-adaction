@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         for (const user of users.data) {
             adminTable.innerHTML += `<tr>
                 <td>${user.first_name} ${user.last_name}</td>
-                <td>${user.city}</td>
+                <td>${user.city_name || 'Ville inconnue'}</td>
                 <td><a href="mailto:${user.email}">${user.email}</a></td>
                 <td>${user.created_at.split('T')[0]}</td>
                 <td>${user.is_admin ? "⭐" : ""}</td>
