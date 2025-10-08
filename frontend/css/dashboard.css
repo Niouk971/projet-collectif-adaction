@@ -14,3 +14,8 @@ th {
 th:last-child {
     text-align: center;
 }
+
+#newCollectForm {
+    display: none;
+    flex-direction: column;
+}

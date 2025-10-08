@@ -5,9 +5,9 @@ const userForm = document.querySelector('#userForm');
 
 
 // 🧑‍🤝‍🧑 Pour remplir le <select> avec les usagers
-async function fetchUsers() {
+async function fetchUsers(order = 'asc', sort = 'first_name') {
     try {
-        const users = await fetchFromAPI("users");
+        const users = await fetchFromAPI(`users?sort=${sort}&order=${order}`);
 
         // 🔍 Vérifie que les données sont bien reçues
         if (!users || !users.data) {

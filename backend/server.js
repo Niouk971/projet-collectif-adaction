@@ -59,7 +59,7 @@ app.get("/:table", async (req, res) => {
     const filters = req.query;
 
     // 🔒 Liste blanche pour éviter l'injection SQL
-    const validTables = ["users", "trashes", "cities", "collects"];
+    const validTables = ["users", "trashes", "cities", "collects", "collected_trashes"];
     if (!validTables.includes(table)) {
         return res.status(400).json({ error: "Table non autorisée" });
     }
@@ -107,7 +107,7 @@ app.get("/:table", async (req, res) => {
     const orderSQL = `ORDER BY ${sort} ${["ASC", "DESC"].includes(order) ? order : "ASC"}`;
 
     // 📄 Pagination
-    const limit = parseInt(filters.limit) || 10;
+    const limit = parseInt(filters.limit) || null;
     const offset = parseInt(filters.offset) || 0;
     const paginationSQL = `LIMIT ${limit} OFFSET ${offset}`;
 
@@ -145,7 +145,7 @@ app.get("/:table/:id", async (req, res) => {
     const numericId = Number(id);
 
     // Liste blanche pour éviter l'injection SQL
-    const validTables = ["users", "products", "orders", "categories"];
+    const validTables = ["users", "trashes", "cities", "collects", "collected_trashes"];
     if (!validTables.includes(table)) {
         return res.status(400).json({ error: "Table non autorisée" });
     }
@@ -177,7 +177,7 @@ app.post("/:table", async (req, res) => {
     const { table } = req.params;
     const data = req.body;
 
-    const validTables = ["users", "trashes", "cities", "collects"];
+    const validTables = ["users", "trashes", "cities", "collects", "collected_trashes"];
     if (!validTables.includes(table)) {
         return res.status(400).json({ error: "Table non autorisée" });
     }

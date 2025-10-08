@@ -2,23 +2,11 @@ const userSpan = document.querySelector('#userSpan');
 const collectsTable = document.querySelector('#collectsTable');
 const citySelector = document.querySelector('#citySelector');
 const trashButtonsContainer = document.querySelector('#trashButtonsContainer');
+const cancelButton = document.querySelector('#cancelButton');
+const buttonMinus = document.getElementsByClassName('minus');
+const buttonPlus = document.getElementsByClassName('plus');
 
 let itemNumber = 0;
-
-document.addEventListener('DOMContentLoaded', function () {
-    const declareCollectButton = document.getElementById('declareCollectButton');
-    const dashboard = document.getElementById('dashboard');
-
-    declareCollectButton.addEventListener('click', function () {
-        dashboard.style.display = 'none';
-    });
-
-    const cancelButton = document.getElementById('cancelButton');
-
-    cancelButton.addEventListener('click', function () {
-        window.location.reload();
-    });
-});
 
 document.addEventListener('DOMContentLoaded', async () => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -45,7 +33,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     try {
         // Fetch collects for the specific user
-        const collectsResponse = await fetch(`http://localhost:3000/collects`);
+        const collectsResponse = await fetch(`http://localhost:3000/collects?user_id=${userId}`);
         if (!collectsResponse.ok) {
             throw new Error(`Erreur HTTP: ${collectsResponse.status}`);
         }
@@ -87,11 +75,33 @@ document.addEventListener('DOMContentLoaded', async () => {
         const trashes = await trashesResponse.json();
         console.log("voici la liste des déchets :", trashes);
         for (const trash of trashes.data) {
-            trashButtonsContainer.innerHTML += `<div class="trashButtons"><div><h3>${trash.emoji}</h3></div><div><button class="minus">-</button></div>
-            <div><span id="item-${itemNumber}"> 0</span> ${trash.trash_name} </br>(${trash.trash_score} points)</div><div><button class="plus">+</button></div></div>`;
+            trashButtonsContainer.innerHTML += `<div class="trashButtons"><div><h3>${trash.emoji}</h3></div><div><button type="button" class="minus" data-item-number="${itemNumber}">-</button></div>
+            <div><span id="item-${itemNumber}"> 0</span> ${trash.trash_name} </br>(${trash.trash_score} points)</div><div><button type="button" class="plus" data-item-number="${itemNumber}">+</button></div></div>`;
+            itemNumber++;
         }
     } catch (error) {
         console.error('Erreur lors de la récupération des types de déchets :', error);
         alert('Une erreur est survenue lors de la récupération des types de déchets. Veuillez réessayer.');
     };
+});
+
+const reloadPage = () => {
+    window.location.reload();
+};
+
+const updateItemCount = (index, delta) => {
+    const itemSpan = document.getElementById(`item-${index}`);
+    let currentCount = parseInt(itemSpan.textContent);
+    currentCount += delta;
+    if (currentCount < 0) currentCount = 0;
+    itemSpan.textContent = currentCount;}
+
+trashButtonsContainer.addEventListener('click', (event) => {
+    if (event.target.classList.contains('plus')) {
+        const itemNumber = parseInt(event.target.dataset.itemNumber);
+        updateItemCount(itemNumber, 1);
+    } else if (event.target.classList.contains('minus')) {
+        const itemNumber = parseInt(event.target.dataset.itemNumber);
+        updateItemCount(itemNumber, -1);
+    }
 });
