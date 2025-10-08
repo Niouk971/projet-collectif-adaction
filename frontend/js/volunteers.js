@@ -38,13 +38,52 @@ document.addEventListener('DOMContentLoaded', async () => {
             throw new Error(`Erreur HTTP: ${collectsResponse.status}`);
         }
         const collects = await collectsResponse.json();
+
         // Populate the table with the collects data
         for (const collect of collects.data) {
+            // Fetch collected trashes for the specific collect
+            const collectedTrashesResponse = await fetch(`http://localhost:3000/collected_trashes?collect_id=${collect.id}`);
+            if (!collectedTrashesResponse.ok) {
+                throw new Error(`Erreur HTTP: ${collectedTrashesResponse.status}`);
+            }
+            const collectedTrashes = await collectedTrashesResponse.json();
+
+            // Initialize trash counts
+            let cigaretteButts = 0;
+            let plasticPackages = 0;
+            let glassBottles = 0;
+            let fishingGear = 0;
+            let metalObjects = 0;
+
+            // Aggregate trash counts from collected_trashes
+            for (const collectedTrash of collectedTrashes.data) {
+                switch (collectedTrash.trash_id) {
+                    case 1: // Cigarette butts
+                        cigaretteButts = collectedTrash.quantity;
+                        break;
+                    case 2: // Plastic packages
+                        plasticPackages = collectedTrash.quantity;
+                        break;
+                    case 3: // Glass bottles
+                        glassBottles = collectedTrash.quantity;
+                        break;
+                    case 4: // Fishing gear
+                        fishingGear = collectedTrash.quantity;
+                        break;
+                    case 5: // Metal objects
+                        metalObjects = collectedTrash.quantity;
+                        break;
+                }
+            }
+
             collectsTable.innerHTML += `<tr>
                     <td>${collect.city_id}</td>
-                    <td>${collect.date}</td>
-                    <td>${collect.collected_trashes}</td>
-                    <td><table>🔍</table></td>
+                    <td>${collect.date.split('T')[0]}</td>
+                    <td>${cigaretteButts}</td>
+                    <td>${plasticPackages}</td>
+                    <td>${glassBottles}</td>
+                    <td>${fishingGear}</td>
+                    <td>${metalObjects}</td>
                 </tr>`;
         };
     } catch (error) {
@@ -58,6 +97,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             throw new Error(`Erreur HTTP: ${citiesResponse.status}`);
         }
         const cities = await citiesResponse.json();
+        
         // Populate the city selector with the cities
         for (const city of cities.data) {
             citySelector.innerHTML += `<option value="${city.id}">${city.name}</option>`;

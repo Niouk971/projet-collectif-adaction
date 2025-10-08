@@ -206,7 +206,7 @@ app.put("/:table/:id", async (req, res) => {
     const { table, id } = req.params;
     const data = req.body;
 
-    const validTables = ["users", "trashes", "cities", "collects"];
+    const validTables = ["users", "trashes", "cities", "collects", "collected_trashes"];
     if (!validTables.includes(table)) {
         return res.status(400).json({ error: "Table non autorisée" });
     }
@@ -238,7 +238,7 @@ app.patch("/:table/:id", async (req, res) => {
     const { table, id } = req.params;
     const data = req.body;
 
-    const validTables = ["users", "trashes", "cities", "collects"];
+    const validTables = ["users", "trashes", "cities", "collects", "collected_trashes"];
     if (!validTables.includes(table)) {
         return res.status(400).json({ error: "Table non autorisée" });
     }
@@ -269,7 +269,7 @@ app.patch("/:table/:id", async (req, res) => {
 app.delete("/:table/:id", async (req, res) => {
     const { table, id } = req.params;
 
-    const validTables = ["users", "trashes", "cities", "collects"];
+    const validTables = ["users", "trashes", "cities", "collects", "collected_trashes"];
     if (!validTables.includes(table)) {
         return res.status(400).json({ error: "Table non autorisée" });
     }

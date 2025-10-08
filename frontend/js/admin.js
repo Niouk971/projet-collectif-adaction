@@ -39,7 +39,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                 <td>${user.first_name} ${user.last_name}</td>
                 <td>${user.city}</td>
                 <td><a href="mailto:${user.email}">${user.email}</a></td>
-                <td>${user.score}</td>
                 <td>${user.created_at}</td>
                 <td>${user.is_admin ? "⭐" : ""}</td>
                 <td><button>✏️</button></td>
