@@ -8,6 +8,7 @@ const buttonPlus = document.getElementsByClassName('plus');
 
 let itemNumber = 0;
 
+// affiche le prénom de l'usager connecté
 document.addEventListener('DOMContentLoaded', async () => {
     const urlParams = new URLSearchParams(window.location.search);
     const userId = urlParams.get('userId');
@@ -31,8 +32,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         };
     };
 
+    // Liste les collectes du bénévole dans le tableau
     try {
-        // Fetch collects for the specific user
         const collectsResponse = await fetch(`http://localhost:3000/collects?user_id=${userId}`);
         if (!collectsResponse.ok) {
             throw new Error(`Erreur HTTP: ${collectsResponse.status}`);
