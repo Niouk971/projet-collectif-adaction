@@ -1,7 +1,12 @@
 const userSpan = document.querySelector('#userSpan');
 const adminTable = document.querySelector('#adminTable');
-const citySelector = document.querySelector('#citySelector');
 const cancelButton = document.querySelector('#cancelButton');
+const volunteerFirstName = document.querySelector('#volunteerFirstName');
+const volunteerLastName = document.querySelector('#volunteerLastName');
+const volunteerEmail = document.querySelector('#volunteerEmail');
+const volunteerCity = document.querySelector('#citySelector');
+const isAdminCheckbox = document.querySelector('#isAdminCheckbox');
+const newVolunteerFormElem = document.querySelector('#newVolunteerFormElem');
 
 const reloadPage = () => {
     window.location.href = window.location.href;
@@ -74,4 +79,38 @@ document.addEventListener('DOMContentLoaded', async () => {
         alert('Une erreur est survenue lors de la récupération des villes. Veuillez réessayer.');
     }
 
+});
+
+newVolunteerFormElem.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    const volunteerData = {
+        first_name: volunteerFirstName.value,
+        last_name: volunteerLastName.value,
+        email: volunteerEmail.value,
+        city_id: volunteerCity.value,
+        is_admin: isAdminCheckbox.checked
+    };
+
+    try {
+        const response = await fetch('http://localhost:3000/users', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(volunteerData)
+        });
+
+        if (!response.ok) {
+            throw new Error(`Erreur HTTP: ${response.status}`);
+        }
+
+        const result = await response.json();
+        console.log('Success:', result);
+        reloadPage();
+
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Une erreur est survenue lors de l\'enregistrement du bénévole. Veuillez réessayer.');
+    }
 });
