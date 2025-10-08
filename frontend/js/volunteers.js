@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
 
             collectsTable.innerHTML += `<tr>
-                    <td>${collect.city_id}</td>
+                    <td>${collect.city_name || 'Ville inconnue'}</td>
                     <td>${collect.date.split('T')[0]}</td>
                     <td>${cigaretteButts}</td>
                     <td>${plasticPackages}</td>
