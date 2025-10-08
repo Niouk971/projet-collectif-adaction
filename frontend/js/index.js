@@ -1,29 +1,40 @@
+import { fetchFromAPI } from "../functions/fetchFromAPI.js";
+
 const userSelector = document.querySelector('#userSelector');
 const userForm = document.querySelector('#userForm');
 
-//pour avoir la liste des usagers dans le select
+
+// 🧑‍🤝‍🧑 Pour remplir le <select> avec les usagers
 async function fetchUsers() {
     try {
-        const res = await fetch(`http://localhost:3000/users`);
-        const users = await res.json();
+        const users = await fetchFromAPI("users");
 
+        // 🔍 Vérifie que les données sont bien reçues
+        if (!users || !users.data) {
+            alert("Aucune donnée reçue pour les usagers.");
+            console.warn("Réponse vide ou mal formée :", users);
+            return;
+        }
 
         console.log("voici la liste des usagers :", users);
 
-        userSelector.innerHTML = `<option value="0">-- Choisissez votre nom dans la liste --</option>`
+        // 🧱 Réinitialise le <select>
+        userSelector.innerHTML = `<option value="0">-- Choisissez votre nom dans la liste --</option>`;
+
+        // 🧑‍💼 Ajoute chaque usager dans la liste déroulante
         for (const user of users.data) {
             const adminTag = user.is_admin ? " (admin)" : "";
             const displayName = `${user.first_name} ${user.last_name}${adminTag}`;
-            userSelector.innerHTML +=
-                `<option value="${user.id}">${displayName}</option>`
-        };
+            userSelector.innerHTML += `<option value="${user.id}">${displayName}</option>`;
+        }
     } catch (err) {
-        console.error("Erreur :", err);
-    };
-};
-
+        console.error("Erreur lors du chargement des usagers :", err.message);
+        alert("Impossible de charger la liste des usagers. Veuillez réessayer plus tard.");
+    }
+}
 
 fetchUsers();
+
 
 //pour rediriger vers la bonne page selon le type d'usager
 userForm.addEventListener('submit', async function (event) {
