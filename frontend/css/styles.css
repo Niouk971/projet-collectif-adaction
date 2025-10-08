@@ -1,9 +1,98 @@
 /* RESET DE BASE (À placer tout en haut de ton fichier CSS) */
-body, html {
-    margin: 0; /* SUPPRIME TOUTES LES MARGES EXTÉRIEURES PAR DÉFAUT (Haut, droite, bas, gauche) */
-    padding: 0; /* SUPPRIME TOUT PADDING INTÉRIEUR PAR DÉFAUT */
-    width: 100%; /* S'assure que le contenu prend bien 100% de la fenêtre */
-    min-height: 100%;
+body,
+html {
+  margin: 0;
+  /* SUPPRIME TOUTES LES MARGES EXTÉRIEURES PAR DÉFAUT (Haut, droite, bas, gauche) */
+  padding: 0;
+  /* SUPPRIME TOUT PADDING INTÉRIEUR PAR DÉFAUT */
+  width: 100%;
+  /* S'assure que le contenu prend bien 100% de la fenêtre */
+  min-height: 100%;
+}
+
+/* Assurez-vous que le body n'a pas de marges par défaut */
+body {
+  margin: 0;
+  padding: 0;
+  /* Optionnel : couleur de fond pour distinguer le cadre du fond de la page */
+  background-color: #f4f4f4;
+}
+
+/* Le conteneur principal qui forme le cadre */
+#partners {
+  /* 1. Centrage et Dimension */
+  max-width: 1200px;
+  /* Largeur maximale pour les grands écrans */
+  width: 90%;
+  /* Prend 90% de la largeur du viewport sur les petits écrans */
+  margin: 30px auto;
+  /* Centre horizontalement (auto) et ajoute de l'espace au-dessus et en dessous (30px) */
+
+  /* 2. Style du Cadre */
+  background-color: white;
+  /* Assurez-vous que l'intérieur est blanc (ou la couleur de votre choix) */
+  border: 1px solid #ddd;
+  /* Bordure fine et discrète (gris clair) */
+
+  /* 3. Optionnel : Espace intérieur (pour ne pas coller le contenu à la bordure) */
+  padding: 20px 40px;
+  /* Padding de 20px en haut/bas et 40px gauche/droite */
+
+  /* 4. Optionnel : Coins arrondis et ombre pour un look moderne */
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+#dashboard {
+  /* 1. Centrage et Dimension */
+  max-width: 1200px;
+  /* Largeur maximale pour les grands écrans */
+  width: 90%;
+  /* Prend 90% de la largeur du viewport sur les petits écrans */
+  margin: 30px auto;
+  /* Centre horizontalement (auto) et ajoute de l'espace au-dessus et en dessous (30px) */
+
+  /* 2. Style du Cadre */
+  background-color: white;
+  /* Assurez-vous que l'intérieur est blanc (ou la couleur de votre choix) */
+  border: 1px solid #ddd;
+  /* Bordure fine et discrète (gris clair) */
+
+  /* 3. Optionnel : Espace intérieur (pour ne pas coller le contenu à la bordure) */
+  padding: 20px 40px;
+  /* Padding de 20px en haut/bas et 40px gauche/droite */
+
+  /* 4. Optionnel : Coins arrondis et ombre pour un look moderne */
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+
+  text-align: center;
+
+}
+
+#newVolunteerForm {
+  max-width: 1200px;
+  /* Largeur maximale pour les grands écrans */
+  width: 90%;
+  /* Prend 90% de la largeur du viewport sur les petits écrans */
+  margin: 30px auto;
+  /* Centre horizontalement (auto) et ajoute de l'espace au-dessus et en dessous (30px) */
+
+  /* 2. Style du Cadre */
+  background-color: white;
+  /* Assurez-vous que l'intérieur est blanc (ou la couleur de votre choix) */
+  border: 1px solid #ddd;
+  /* Bordure fine et discrète (gris clair) */
+
+  /* 3. Optionnel : Espace intérieur (pour ne pas coller le contenu à la bordure) */
+  padding: 20px 40px;
+  /* Padding de 20px en haut/bas et 40px gauche/droite */
+
+  /* 4. Optionnel : Coins arrondis et ombre pour un look moderne */
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+
+  text-align: center;
 }
 
 header {
@@ -19,10 +108,60 @@ header {
   font-weight: 700;
   align-items: center;
   color: var(--header-color, rgb(249, 3, 3));
+  border-bottom: none !important;
+  /* Supprime toute bordure inférieure du h1 */
+  box-shadow: none !important;
+  /* Supprime toute ombre du h1 */
+  margin-bottom: 0 !important;
+  /* Assure qu'il n'y a pas de marge basse qui ressemble à un espace */
+  padding-bottom: 0 !important;
+  /* Assure qu'il n'y a pas de padding bas qui contribue */
+
+  /* Ajustement de la hauteur de ligne pour le texte */
+  line-height: 1.1;
+  /* Peut être 1, 1.2, etc. - joue avec cette valeur */
+  overflow: hidden;
+  /* Cache tout ce qui dépasse des limites de l'élément */
 }
+
+#homeIcon a {
+  text-decoration: none !important;
+  text-decoration-line: none !important;
+
+  /* FORCER LA COULEUR DE LA LIGNE À ÊTRE BLANCHE */
+  text-decoration-color: white !important;
+  /* Utiliser la couleur du fond de la page */
+
+  border-bottom: none !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+
+/* Si la ligne ne bouge pas, essayez de la mettre en couleur rouge (la couleur du texte "Ada") */
+/* #homeIcon a { text-decoration-color: var(--header-color, rgb(249, 3, 3)) !important; } */
+
+/* Cibler le SPAN qui contient la partie bleue du texte */
+#homeIcon .enceColor {
+  border-bottom: none !important;
+  text-decoration: none !important;
+  text-decoration-line: none !important;
+}
+
 
 .enceColor {
   color: var(--header-color, rgb(18, 0, 217));
+}
+
+/* Cibler le formulaire qui contient la liste déroulante et le bouton */
+#userForm {
+  /* Ajoute une marge au bas du formulaire pour le décoller du footer */
+  margin-bottom: 50px;
+  /* Tu peux ajuster cette valeur (ex: 80px) pour plus d'espace */
+  /* Centrage des éléments "inline" (comme la liste déroulante et le bouton) */
+  text-align: center;
+
+  margin-bottom: 50px;
+  /* Conserver la marge pour l'espace avec le footer */
 }
 
 #end {
@@ -119,11 +258,11 @@ header {
 /* DASHBOARD CSS A ETE COLLE ICI */
 
 table {
-    border-collapse: collapse;
+  border-collapse: collapse;
 }
 
 tr {
-    border: 1px solid black;
+  border: 1px solid black;
 }
 
 th {
@@ -132,10 +271,21 @@ th {
 }
 
 th:last-child {
-    text-align: center;
+  text-align: center;
 }
 
 #newCollectForm {
-    display: none;
-    flex-direction: column;
+  display: none;
+  flex-direction: column;
+}
+
+#addANumber {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.plus
+.minus {
+  margin: 0 10px;
 }

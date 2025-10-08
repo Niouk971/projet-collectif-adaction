@@ -121,8 +121,23 @@ document.addEventListener('DOMContentLoaded', async () => {
         const trashes = await trashesResponse.json();
         console.log("voici la liste des déchets :", trashes);
         for (const trash of trashes.data) {
-            trashButtonsContainer.innerHTML += `<div class="trashButtons"><div><h3>${trash.emoji}</h3></div><div><button type="button" class="minus" data-item-number="${itemNumber}">-</button></div>
-            <div><span id="item-${itemNumber}"> 0</span> ${trash.trash_name} </br>(${trash.trash_score} points)</div><div><button type="button" class="plus" data-item-number="${itemNumber}">+</button></div></div>`;
+            trashButtonsContainer.innerHTML += `
+            <div class="trashButtons">
+                <div>
+                    <h3>${trash.emoji}</h3>
+                </div>
+                <div id="addANumber">
+                    <div>
+                        <button type="button" class="minus" data-item-number="${itemNumber}">-</button>
+                    </div>
+                    <div>
+                        <span id="item-${itemNumber}">0</span> ${trash.trash_name}
+                    </div>
+                    <div>
+                        <button type="button" class="plus" data-item-number="${itemNumber}">+</button>
+                    </div>
+                <div>
+            </div>`;
             itemNumber++;
         }
     } catch (error) {
