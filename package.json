@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "## backlog - créer les routes GET, POST, PATCH, DELETE dans le fichier serveur.js - créer les scripts de front-end - afficher l'application avec HTML",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

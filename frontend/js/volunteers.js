@@ -94,7 +94,8 @@ const updateItemCount = (index, delta) => {
     let currentCount = parseInt(itemSpan.textContent);
     currentCount += delta;
     if (currentCount < 0) currentCount = 0;
-    itemSpan.textContent = currentCount;}
+    itemSpan.textContent = currentCount;
+}
 
 trashButtonsContainer.addEventListener('click', (event) => {
     if (event.target.classList.contains('plus')) {
@@ -103,5 +104,89 @@ trashButtonsContainer.addEventListener('click', (event) => {
     } else if (event.target.classList.contains('minus')) {
         const itemNumber = parseInt(event.target.dataset.itemNumber);
         updateItemCount(itemNumber, -1);
+    }
+});
+
+// COPILOT COMMENCE ICI
+
+newCollectFormElem.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const userId = urlParams.get('userId');
+    const collectCity = document.querySelector('#citySelector').value;
+    const collectDate = document.querySelector('#collectDate').value;
+    let trashes = [];
+    for (let i = 0; i < itemNumber; i++) {
+        const itemSpan = document.getElementById(`item-${i}`);
+        const currentCount = parseInt(itemSpan.textContent);
+        trashes.push(currentCount);
+    }
+
+    const collectData = {
+        user_id: userId,
+        city_id: collectCity,
+        date: collectDate,
+    };
+
+    try {
+        const response = await fetch('http://localhost:3000/collects', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(collectData),
+        });
+
+        if (!response.ok) {
+            throw new Error(`Erreur HTTP: ${response.status}`);
+        }
+
+        const result = await response.json();
+        console.log('Success:', result);
+
+
+        const collectId = result.id; // Assuming the response includes the new collect's ID
+        console.log('New collect ID:', collectId);
+
+        // Send the collected trash data to the server
+        for (let i = 0; i < itemNumber; i++) {
+            const itemSpan = document.getElementById(`item-${i}`);
+            const currentCount = parseInt(itemSpan.textContent);
+
+            if (currentCount > 0) {
+                const trashId = i + 1; // Assuming trash ID is the index + 1
+                const collectedTrashData = {
+                    collect_id: collectId,
+                    trash_id: trashId,
+                    quantity: currentCount
+                };
+
+                try {
+                    const collectedTrashResponse = await fetch('http://localhost:3000/collected_trashes', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(collectedTrashData),
+                    });
+
+                    if (!collectedTrashResponse.ok) {
+                        throw new Error(`Erreur HTTP: ${collectedTrashResponse.status}`);
+                    }
+
+                    const collectedTrashResult = await collectedTrashResponse.json();
+                    console.log(`Success for trash ${trashId}:`, collectedTrashResult);
+
+                } catch (error) {
+                    console.error(`Error for trash ${trashId}:`, error);
+                    alert(`Une erreur est survenue lors de l'enregistrement des déchets collectés pour le type ${trashId}. Veuillez réessayer.`);
+                }
+            }
+        }
+        reloadPage();
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Une erreur est survenue lors de l\'enregistrement de la collecte. Veuillez réessayer.');
     }
 });
