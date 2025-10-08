@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" href="../css/styles.css">
-    <link rel="stylesheet" href="../css/dashboard.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -43,7 +42,9 @@
         </div>
         <div>
             <a href="index.html"><button>🏠 Accueil</button></a>
-            <button id="declareCollectButton" onclick="document.getElementById('dashboard').style.display = 'none'; document.getElementById('newCollectForm').style.display = 'flex';">➕ Déclarer une nouvelle collecte</button>
+            <button id="declareCollectButton"
+                onclick="document.getElementById('dashboard').style.display = 'none'; document.getElementById('newCollectForm').style.display = 'flex';">➕
+                Déclarer une nouvelle collecte</button>
         </div>
     </div>
 
@@ -51,11 +52,14 @@
         <h2>Nouvelle collecte</h2>
         <form id="newCollectFormElem">
             <label for="collectCity">Ville de la collecte</label>
-            <select type="select" name="collectCity" id="citySelector"><!-- volunteers.js --></select></br>
+            <select type="select" name="collectCity" id="citySelector">
+                <option value="">-- Sélectionner une ville --</option>
+                <!-- volunteers.js -->
+            </select></br>
             <label for="collectDate">Date de la collecte</label>
             <input type="date" name="collectDate" id="collectDate">
             <div id="trashButtonsContainer"><!-- volunteers.js --></div>
-            <button type="button" id="cancelButton" onclick="reloadPage()">Annuler</button>
+            <button type="button" id="cancelButton">Annuler</button>
             <button type="submit">Enregistrer la collecte</button>
         </form>
     </div>

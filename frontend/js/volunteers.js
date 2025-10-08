@@ -5,9 +5,15 @@ const trashButtonsContainer = document.querySelector('#trashButtonsContainer');
 const cancelButton = document.querySelector('#cancelButton');
 const buttonMinus = document.getElementsByClassName('minus');
 const buttonPlus = document.getElementsByClassName('plus');
-
 let itemNumber = 0;
 
+const reloadPage = () => {
+    window.location.href = window.location.href;
+};
+
+cancelButton.addEventListener('click', reloadPage);
+
+// affiche le prénom de l'usager connecté
 document.addEventListener('DOMContentLoaded', async () => {
     const urlParams = new URLSearchParams(window.location.search);
     const userId = urlParams.get('userId');
@@ -31,8 +37,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         };
     };
 
+    // Liste les collectes du bénévole dans le tableau
     try {
-        // Fetch collects for the specific user
         const collectsResponse = await fetch(`http://localhost:3000/collects?user_id=${userId}`);
         if (!collectsResponse.ok) {
             throw new Error(`Erreur HTTP: ${collectsResponse.status}`);
@@ -97,7 +103,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             throw new Error(`Erreur HTTP: ${citiesResponse.status}`);
         }
         const cities = await citiesResponse.json();
-        
+
         // Populate the city selector with the cities
         for (const city of cities.data) {
             citySelector.innerHTML += `<option value="${city.id}">${city.name}</option>`;
@@ -125,10 +131,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     };
 });
 
-const reloadPage = () => {
-    window.location.reload();
-};
-
 const updateItemCount = (index, delta) => {
     const itemSpan = document.getElementById(`item-${index}`);
     let currentCount = parseInt(itemSpan.textContent);
@@ -146,8 +148,6 @@ trashButtonsContainer.addEventListener('click', (event) => {
         updateItemCount(itemNumber, -1);
     }
 });
-
-// COPILOT COMMENCE ICI
 
 newCollectFormElem.addEventListener('submit', async (event) => {
     event.preventDefault();
