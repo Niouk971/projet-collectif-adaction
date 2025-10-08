@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" href="../css/styles.css">
-    <link rel="stylesheet" href="../css/dashboard.css">
     <script defer type="module" src="../js/admin.js"></script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -51,16 +50,21 @@
         <div id="newVolunteerForm"> <!-- display:none de base-->
             <h2>Nouveau bénévole</h2>
             <form id="newVolunteerFormElem">
-                <label for="volunteerName">Nom du bénévole</label>
-                <input type="text" name="volunteerName" id="volunteerName" required></br>
+                <label for="volunteerFirstName">Nom du bénévole</label>
+                <input type="text" name="volunteerFirstName" id="volunteerFirstName" required></br>
+                <label for="volunteerLastName">Prénom du bénévole</label>
+                <input type="text" name="volunteerLastName" id="volunteerLastName" required></br>
                 <label for="volunteerEmail">Email du bénévole</label>
                 <input type="email" name="volunteerEmail" id="volunteerEmail" required></br>
                 <label for="volunteerCity">Ville du bénévole</label>
-                <select type="select" name="volunteerCity" id="citySelector"><!-- volunteers.js --></select></br>
+                <select type="select" name="volunteerCity" id="citySelector" required>
+                    <option value="">-- Sélectionner une ville --</option>
+                    <!-- volunteers.js -->
+                </select></br>
                 <label for="isAdminCheckbox">Est un administrateur ?</label>
                 <input type="checkbox" id="isAdminCheckbox"></br>
                 <div id="trashButtonsContainer"><!-- volunteers.js --></div>
-                <button type="button" id="cancelButton" onclick="reloadPage()">Annuler</button>
+                <button type="button" id="cancelButton">Annuler</button>
                 <button type="submit">Enregistrer la collecte</button>
             </form>
         </div>
