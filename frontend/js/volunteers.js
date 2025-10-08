@@ -3,7 +3,6 @@ const collectsTable = document.querySelector('#collectsTable');
 const citySelector = document.querySelector('#citySelector');
 const trashButtonsContainer = document.querySelector('#trashButtonsContainer');
 
-
 let itemNumber = 0;
 
 document.addEventListener('DOMContentLoaded', function () {
