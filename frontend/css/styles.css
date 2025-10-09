@@ -275,9 +275,6 @@ a:-webkit-any-link {
   /* Couleur de fond bleu foncé de ton image */
   width: 100%;
   color: white;
-  padding: 30px 5%;
-  /* Espacement interne pour les côtés et le haut/bas */
-  margin: 0px;
   display: flex;
   /* Active Flexbox */
   flex-wrap: wrap;
