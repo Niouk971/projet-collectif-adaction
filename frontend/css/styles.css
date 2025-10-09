@@ -145,6 +145,20 @@ text-align: center;
     text-align: center;
 }
 
+#newCollectFormElem label {
+  display: inline-block;
+  margin-right: 10px; /* espace entre label et champ */
+}
+
+#newCollectFormElem select,
+#newCollectFormElem input[type="date"] {
+  margin-bottom: 20px; /* espace vertical entre les deux champs */
+}
+
+#newCollectFormElem button {
+  margin-bottom: 30px; /* espace vertical entre les deux champs */
+}
+
 /* Cibler le conteneur principal de tous les éléments de déchet */
 #trashButtonsContainer {
   /*Si vous voulez que chaque ligne de déchet soit centrée dans le formulaire */
@@ -340,7 +354,6 @@ a:-webkit-any-link {
   }
 }
 
-;
 
 .divAdopt {
   height: 100px;
