@@ -96,6 +96,11 @@ width: 100%;
   padding: 10px 10px;
 }
 
+#newCollectForm h2{
+text-align: center; 
+  padding: 10px 10px;
+}
+
 #newVolunteerForm {
   max-width: 1200px;
   /* Largeur maximale pour les grands écrans */
@@ -138,6 +143,20 @@ width: 100%;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
 
     text-align: center;
+}
+
+#newCollectFormElem label {
+  display: inline-block;
+  margin-right: 10px; /* espace entre label et champ */
+}
+
+#newCollectFormElem select,
+#newCollectFormElem input[type="date"] {
+  margin-bottom: 20px; /* espace vertical entre les deux champs */
+}
+
+#newCollectFormElem button {
+  margin-bottom: 30px; /* espace vertical entre les deux champs */
 }
 
 /* Cibler le conteneur principal de tous les éléments de déchet */
@@ -335,7 +354,6 @@ a:-webkit-any-link {
   }
 }
 
-;
 
 .divAdopt {
   height: 100px;
@@ -349,11 +367,11 @@ table {
 }
 
 tr {
-  border: 1px solid black;
+  border: 1px solid #ccc;
 }
 
-th {
-  text-align: left;
+th, td {
+  text-align: center;
   padding: 10px 10px;
 }
 
