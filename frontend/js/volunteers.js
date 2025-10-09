@@ -164,6 +164,9 @@ trashButtonsContainer.addEventListener('click', (event) => {
     }
 });
 
+
+//CODE A PRESENTER : FELIX
+
 newCollectFormElem.addEventListener('submit', async (event) => {
     event.preventDefault();
 
@@ -184,9 +187,6 @@ newCollectFormElem.addEventListener('submit', async (event) => {
         date: collectDate,
     };
 
-
-    //CODE A PRESENTER : FELIX
-    
     try {
         const response = await fetch('http://localhost:3000/collects', {
             method: 'POST',
@@ -204,7 +204,7 @@ newCollectFormElem.addEventListener('submit', async (event) => {
         console.log('Success:', result);
 
 
-        const collectId = result.id; // on récupère l'id de la dernière collecte en date
+        const collectId = result.id; // on récupère l'id de la dernière collecte
         console.log('New collect ID:', collectId);
 
         // Envoi de la donnée au serveur pour chaque type de déchet
