@@ -70,6 +70,32 @@ body {
 
 }
 
+#adminTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+#adminTable th {
+  /* Remplacez 'left' par 'center' pour centrer le texte */
+  text-align: center; 
+  padding: 10px 10px;
+}
+
+
+#collectsTable {
+width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+
+#collectsTable th {
+    /* Remplacez 'left' par 'center' pour centrer le texte */
+  text-align: center; 
+  padding: 10px 10px;
+}
+
 #newVolunteerForm {
   max-width: 1200px;
   /* Largeur maximale pour les grands écrans */
@@ -92,6 +118,7 @@ body {
   border-radius: 10px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
 
+  border-collapse: collapse;
   text-align: center;
 }
 
@@ -111,7 +138,6 @@ body {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
 
     text-align: center;
-
 }
 
 /* Cibler le conteneur principal de tous les éléments de déchet */
