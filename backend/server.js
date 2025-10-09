@@ -128,19 +128,6 @@ app.get("/:table", async (req, res) => {
         countQuery = `SELECT COUNT(*) FROM ${table} ${whereSQL}`;
     }
 
-    //  if (table === "users") {
-    //     query = `
-    //         SELECT c.*, ci.name AS city_name
-    //         FROM users c
-    //         JOIN cities ci ON c.city_id = ci.id
-    //         ${whereSQL} ${orderSQL} ${paginationSQL}
-    //     `;
-    //     countQuery = `SELECT COUNT(*) FROM users c ${whereSQL}`;
-    // } else {
-    //     query = `SELECT * FROM ${table} ${whereSQL} ${orderSQL} ${paginationSQL}`;
-    //     countQuery = `SELECT COUNT(*) FROM ${table} ${whereSQL}`;
-    // }
-
     try {
         // 🧠 Exécuter les deux requêtes en parallèle
         const [dataResult, countResult] = await Promise.all([
@@ -193,17 +180,6 @@ app.get("/:table/:id", async (req, res) => {
     } else {
         query = `SELECT * FROM ${table} WHERE id = $1`;
     }
-
-    // if (table === "users") {
-    //     query = `
-    //         SELECT c.*, ci.name AS city_name
-    //         FROM users c
-    //         JOIN cities ci ON c.city_id = ci.id
-    //         WHERE c.id = $1
-    //     `;
-    // } else {
-    //     query = `SELECT * FROM ${table} WHERE id = $1`;
-    // }
 
     try {
         const result = await pool.query(`SELECT * FROM ${table} WHERE id = $1`, [numericId]);
