@@ -507,7 +507,7 @@ a:-webkit-any-link {
 #end {
   background-color: red;
   /* Couleur de fond bleu foncé de ton image */
-  width: 100%;
+  /* width: 100%; */
   color: white;
   display: flex;
   /* Active Flexbox */
