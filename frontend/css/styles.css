@@ -18,182 +18,6 @@ body {
   background-color: #f4f4f4;
 }
 
-/* Le conteneur principal qui forme le cadre */
-#partners {
-  /* 1. Centrage et Dimension */
-  max-width: 1200px;
-  /* Largeur maximale pour les grands écrans */
-  width: 90%;
-  /* Prend 90% de la largeur du viewport sur les petits écrans */
-  margin: 30px auto;
-  /* Centre horizontalement (auto) et ajoute de l'espace au-dessus et en dessous (30px) */
-
-  /* 2. Style du Cadre */
-  background-color: white;
-  /* Assurez-vous que l'intérieur est blanc (ou la couleur de votre choix) */
-  border: 1px solid #ddd;
-  /* Bordure fine et discrète (gris clair) */
-
-  /* 3. Optionnel : Espace intérieur (pour ne pas coller le contenu à la bordure) */
-  padding: 20px 40px;
-  /* Padding de 20px en haut/bas et 40px gauche/droite */
-
-  /* 4. Optionnel : Coins arrondis et ombre pour un look moderne */
-  border-radius: 10px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-}
-
-#dashboard {
-  /* 1. Centrage et Dimension */
-  max-width: 1200px;
-  /* Largeur maximale pour les grands écrans */
-  width: 90%;
-  /* Prend 90% de la largeur du viewport sur les petits écrans */
-  margin: 30px auto;
-  /* Centre horizontalement (auto) et ajoute de l'espace au-dessus et en dessous (30px) */
-
-  /* 2. Style du Cadre */
-  background-color: white;
-  /* Assurez-vous que l'intérieur est blanc (ou la couleur de votre choix) */
-  border: 1px solid #ddd;
-  /* Bordure fine et discrète (gris clair) */
-
-  /* 3. Optionnel : Espace intérieur (pour ne pas coller le contenu à la bordure) */
-  padding: 20px 40px;
-  /* Padding de 20px en haut/bas et 40px gauche/droite */
-
-  /* 4. Optionnel : Coins arrondis et ombre pour un look moderne */
-  border-radius: 10px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-
-  text-align: center;
-
-}
-
-#adminTable {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 20px;
-}
-
-#adminTable th {
-  /* Remplacez 'left' par 'center' pour centrer le texte */
-  text-align: center; 
-  padding: 10px 10px;
-}
-
-
-#collectsTable {
-width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 20px;
-}
-
-
-#collectsTable th {
-    /* Remplacez 'left' par 'center' pour centrer le texte */
-  text-align: center; 
-  padding: 10px 10px;
-}
-
-#newCollectForm h2{
-text-align: center; 
-  padding: 10px 10px;
-}
-
-#newVolunteerForm {
-  max-width: 1200px;
-  /* Largeur maximale pour les grands écrans */
-  width: 90%;
-  /* Prend 90% de la largeur du viewport sur les petits écrans */
-  margin: 30px auto;
-  /* Centre horizontalement (auto) et ajoute de l'espace au-dessus et en dessous (30px) */
-
-  /* 2. Style du Cadre */
-  background-color: white;
-  /* Assurez-vous que l'intérieur est blanc (ou la couleur de votre choix) */
-  border: 1px solid #ddd;
-  /* Bordure fine et discrète (gris clair) */
-
-  /* 3. Optionnel : Espace intérieur (pour ne pas coller le contenu à la bordure) */
-  padding: 20px 40px;
-  /* Padding de 20px en haut/bas et 40px gauche/droite */
-
-  /* 4. Optionnel : Coins arrondis et ombre pour un look moderne */
-  border-radius: 10px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-
-  border-collapse: collapse;
-  text-align: center;
-}
-
-#newCollectFormElem {
-    width: 90%;       /* Prend 90% de la largeur du viewport sur les petits écrans */
-    margin: 30px auto; /* Centre horizontalement (auto) et ajoute de l'espace au-dessus et en dessous (30px) */
-    
-    /* 2. Style du Cadre */
-    background-color: white; /* Assurez-vous que l'intérieur est blanc (ou la couleur de votre choix) */
-    border: 1px solid #ddd;  /* Bordure fine et discrète (gris clair) */
-    
-    /* 3. Optionnel : Espace intérieur (pour ne pas coller le contenu à la bordure) */
-    padding: 20px 40px; /* Padding de 20px en haut/bas et 40px gauche/droite */
-    
-    /* 4. Optionnel : Coins arrondis et ombre pour un look moderne */
-    border-radius: 10px; 
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-
-    text-align: center;
-}
-
-#newCollectFormElem label {
-  display: inline-block;
-  margin-right: 10px; /* espace entre label et champ */
-}
-
-#newCollectFormElem select,
-#newCollectFormElem input[type="date"] {
-  margin-bottom: 20px; /* espace vertical entre les deux champs */
-}
-
-#newCollectFormElem button {
-  margin-bottom: 30px; /* espace vertical entre les deux champs */
-}
-
-/* Cibler le conteneur principal de tous les éléments de déchet */
-#trashButtonsContainer {
-  /*Si vous voulez que chaque ligne de déchet soit centrée dans le formulaire */
-    display: flex; 
-       flex-direction: column; 
-       align-items: center; 
-}
-
-/* Cibler le conteneur de chaque ligne de déchet (Hypothèse : .trash-item) */
-.trash-item {
-    display: flex; /* Active l'alignement horizontal pour chaque ligne */
-    align-items: center; /* Aligne verticalement les éléments de la ligne (icône, texte, boutons) */
-    justify-content: center; /* Centre la ligne de déchet dans le conteneur */
-    margin-bottom: 20px; /* Ajoute de l'espace entre chaque ligne de déchet */
-}
-
-/* Cibler le conteneur spécifique des boutons et du compteur */
-.quantity-control {
-    display: flex;             /* Active Flexbox pour aligner `-`, `0`, et `+` horizontalement */
-    align-items: center;       /* Alignement vertical au milieu de l'élément */
-    margin-left: 20px;         /* Ajoute un espace pour séparer de l'icône/nom du déchet */
-}
-
-/* Espacement du compteur */
-.quantity-control .count {
-    margin: 0 10px; /* Ajoute de l'espace de chaque côté du chiffre (0) */
-    font-size: 1.2em; 
-}
-
-/* Optionnel : Ajuster la taille des boutons pour un meilleur look */
-.quantity-control button {
-    width: 30px;
-    height: 30px;
-    line-height: 1; /* S'assure que le texte du bouton est centré verticalement */
-}
 
 header {
   display: flex;
@@ -206,6 +30,7 @@ a:-webkit-any-link {
   cursor: pointer;
   text-decoration: none;
 }
+
 
 #homeIcon {
   display: flex;
@@ -243,8 +68,6 @@ a:-webkit-any-link {
   text-shadow: none !important;
 }
 
-/* Si la ligne ne bouge pas, essayez de la mettre en couleur rouge (la couleur du texte "Ada") */
-/* #homeIcon a { text-decoration-color: var(--header-color, rgb(249, 3, 3)) !important; } */
 
 /* Cibler le SPAN qui contient la partie bleue du texte */
 #homeIcon .enceColor {
@@ -258,6 +81,165 @@ a:-webkit-any-link {
   color: var(--header-color, rgb(18, 0, 217));
 }
 
+
+
+/*INDEX.HTML - PARTNERS SECTION CSS*/
+/* Le conteneur principal qui forme le cadre */
+#partners {
+  /* 1. Centrage et Dimension */
+  max-width: 1200px;
+  /* Largeur maximale pour les grands écrans */
+  width: 90%;
+  /* Prend 90% de la largeur du viewport sur les petits écrans */
+  margin: 30px auto;
+  /* Centre horizontalement (auto) et ajoute de l'espace au-dessus et en dessous (30px) */
+
+  /* 2. Style du Cadre */
+  background-color: white;
+  /* Assurez-vous que l'intérieur est blanc (ou la couleur de votre choix) */
+  border: 1px solid #ddd;
+  /* Bordure fine et discrète (gris clair) */
+
+  /* 3. Optionnel : Espace intérieur (pour ne pas coller le contenu à la bordure) */
+  padding: 20px 40px;
+  /* Padding de 20px en haut/bas et 40px gauche/droite */
+
+  /* 4. Optionnel : Coins arrondis et ombre pour un look moderne */
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.logo-association{
+/* Définit une hauteur fixe pour tous les logos (ajustez cette valeur) */
+    height: 40px;
+    width: auto;  /* Maintient les proportions de l'image automatiquement */
+    
+    /* Optionnel : pour aligner verticalement l'image avec le texte si elle est dans un <h2> */
+    vertical-align: middle; 
+    
+    /* Optionnel : ajoute un peu d'espace à droite du logo pour le séparer du texte */
+    margin-right: 10px; 
+}
+
+/* Volonteer HTML */
+
+#dashboard {
+  /* 1. Centrage et Dimension */
+  max-width: 1200px;
+  /* Largeur maximale pour les grands écrans */
+  width: 90%;
+  /* Prend 90% de la largeur du viewport sur les petits écrans */
+  margin: 30px auto;
+  /* Centre horizontalement (auto) et ajoute de l'espace au-dessus et en dessous (30px) */
+
+  /* 2. Style du Cadre */
+  background-color: white;
+  /* Assurez-vous que l'intérieur est blanc (ou la couleur de votre choix) */
+  border: 1px solid #ddd;
+  /* Bordure fine et discrète (gris clair) */
+
+  /* 3. Optionnel : Espace intérieur (pour ne pas coller le contenu à la bordure) */
+  padding: 20px 40px;
+  /* Padding de 20px en haut/bas et 40px gauche/droite */
+
+  /* 4. Optionnel : Coins arrondis et ombre pour un look moderne */
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+
+  text-align: center;
+
+}
+
+#collectsTable {
+width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+
+#collectsTable th {
+    /* Remplacez 'left' par 'center' pour centrer le texte */
+  text-align: center; 
+  padding: 10px 10px;
+}
+
+#newVolunteerForm {
+  max-width: 1200px;
+  /* Largeur maximale pour les grands écrans */
+  width: 90%;
+  /* Prend 90% de la largeur du viewport sur les petits écrans */
+  margin: 30px auto;
+  /* Centre horizontalement (auto) et ajoute de l'espace au-dessus et en dessous (30px) */
+
+  /* 2. Style du Cadre */
+  background-color: white;
+  /* Assurez-vous que l'intérieur est blanc (ou la couleur de votre choix) */
+  border: 1px solid #ddd;
+  /* Bordure fine et discrète (gris clair) */
+
+  /* 3. Optionnel : Espace intérieur (pour ne pas coller le contenu à la bordure) */
+  padding: 20px 40px;
+  /* Padding de 20px en haut/bas et 40px gauche/droite */
+
+  /* 4. Optionnel : Coins arrondis et ombre pour un look moderne */
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+
+  border-collapse: collapse;
+  text-align: center;
+}
+
+#newCollectForm h2{
+text-align: center; 
+  padding: 10px 10px;
+}
+
+#newCollectFormElem {
+    width: 90%;       /* Prend 90% de la largeur du viewport sur les petits écrans */
+    margin: 30px auto; /* Centre horizontalement (auto) et ajoute de l'espace au-dessus et en dessous (30px) */
+    
+    /* 2. Style du Cadre */
+    background-color: white; /* Assurez-vous que l'intérieur est blanc (ou la couleur de votre choix) */
+    border: 1px solid #ddd;  /* Bordure fine et discrète (gris clair) */
+    
+    /* 3. Optionnel : Espace intérieur (pour ne pas coller le contenu à la bordure) */
+    padding: 20px 40px; /* Padding de 20px en haut/bas et 40px gauche/droite */
+    
+    /* 4. Optionnel : Coins arrondis et ombre pour un look moderne */
+    border-radius: 10px; 
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+
+    text-align: center;
+}
+
+#newCollectFormElem label {
+  display: inline-block;
+  margin-right: 10px; /* espace entre label et champ */
+}
+
+#newCollectFormElem select,
+#newCollectFormElem input[type="date"] {
+  margin-bottom: 20px; /* espace vertical entre les deux champs */
+}
+
+#newCollectFormElem button {
+  margin-bottom: 30px; /* espace vertical entre les deux champs */
+}
+
+
+/*ADMIN HTML*/
+#adminTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+#adminTable th {
+  /* Remplacez 'left' par 'center' pour centrer le texte */
+  text-align: center; 
+  padding: 10px 10px;
+}
+
 /* Cibler le formulaire qui contient la liste déroulante et le bouton */
 #userForm {
   /* Ajoute une marge au bas du formulaire pour le décoller du footer */
@@ -269,6 +251,45 @@ a:-webkit-any-link {
   margin-bottom: 50px;
   /* Conserver la marge pour l'espace avec le footer */
 }
+
+
+
+/* Cibler le conteneur principal de tous les éléments de déchet */
+#trashButtonsContainer {
+  /*Si vous voulez que chaque ligne de déchet soit centrée dans le formulaire */
+    display: flex; 
+       flex-direction: column; 
+       align-items: center; 
+}
+
+/* Cibler le conteneur de chaque ligne de déchet (Hypothèse : .trash-item) */
+.trash-item {
+    display: flex; /* Active l'alignement horizontal pour chaque ligne */
+    align-items: center; /* Aligne verticalement les éléments de la ligne (icône, texte, boutons) */
+    justify-content: center; /* Centre la ligne de déchet dans le conteneur */
+    margin-bottom: 20px; /* Ajoute de l'espace entre chaque ligne de déchet */
+}
+
+/* Cibler le conteneur spécifique des boutons et du compteur */
+.quantity-control {
+    display: flex;             /* Active Flexbox pour aligner `-`, `0`, et `+` horizontalement */
+    align-items: center;       /* Alignement vertical au milieu de l'élément */
+    margin-left: 20px;         /* Ajoute un espace pour séparer de l'icône/nom du déchet */
+}
+
+/* Espacement du compteur */
+.quantity-control .count {
+    margin: 0 10px; /* Ajoute de l'espace de chaque côté du chiffre (0) */
+    font-size: 1.2em; 
+}
+
+/* Optionnel : Ajuster la taille des boutons pour un meilleur look */
+.quantity-control button {
+    width: 30px;
+    height: 30px;
+    line-height: 1; /* S'assure que le texte du bouton est centré verticalement */
+}
+
 
 #end {
   background-color: #3cd46f;
