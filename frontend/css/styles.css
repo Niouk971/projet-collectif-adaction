@@ -517,6 +517,7 @@ a:-webkit-any-link {
   /* Ajoute un espace entre les colonnes */
   align-items: flex-start;
   /* Aligne le contenu en haut des colonnes */
+  padding: 20px;
 }
 
 #end a:-webkit-any-link {
