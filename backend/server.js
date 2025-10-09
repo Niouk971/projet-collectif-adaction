@@ -128,6 +128,19 @@ app.get("/:table", async (req, res) => {
         countQuery = `SELECT COUNT(*) FROM ${table} ${whereSQL}`;
     }
 
+     if (table === "users") {
+        query = `
+            SELECT c.*, ci.name AS city_name
+            FROM users c
+            JOIN cities ci ON c.city_id = ci.id
+            ${whereSQL} ${orderSQL} ${paginationSQL}
+        `;
+        countQuery = `SELECT COUNT(*) FROM users c ${whereSQL}`;
+    } else {
+        query = `SELECT * FROM ${table} ${whereSQL} ${orderSQL} ${paginationSQL}`;
+        countQuery = `SELECT COUNT(*) FROM ${table} ${whereSQL}`;
+    }
+
     try {
         // 🧠 Exécuter les deux requêtes en parallèle
         const [dataResult, countResult] = await Promise.all([
