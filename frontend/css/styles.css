@@ -101,6 +101,12 @@ header {
   padding: 20px 0;
 }
 
+a:-webkit-any-link {
+  color: -webkit-link;
+  cursor: pointer;
+  text-decoration: none;
+}
+
 #homeIcon {
   display: flex;
   justify-self: center;
@@ -285,7 +291,6 @@ th:last-child {
   justify-content: center;
 }
 
-.plus
-.minus {
+.plus .minus {
   margin: 0 10px;
 }
