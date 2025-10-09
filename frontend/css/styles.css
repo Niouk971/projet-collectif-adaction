@@ -70,6 +70,32 @@ body {
 
 }
 
+#adminTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+#adminTable th {
+  /* Remplacez 'left' par 'center' pour centrer le texte */
+  text-align: center; 
+  padding: 10px 10px;
+}
+
+
+#collectsTable {
+width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+
+#collectsTable th {
+    /* Remplacez 'left' par 'center' pour centrer le texte */
+  text-align: center; 
+  padding: 10px 10px;
+}
+
 #newVolunteerForm {
   max-width: 1200px;
   /* Largeur maximale pour les grands écrans */
@@ -92,7 +118,62 @@ body {
   border-radius: 10px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
 
+  border-collapse: collapse;
   text-align: center;
+}
+
+#newCollectFormElem {
+    width: 90%;       /* Prend 90% de la largeur du viewport sur les petits écrans */
+    margin: 30px auto; /* Centre horizontalement (auto) et ajoute de l'espace au-dessus et en dessous (30px) */
+    
+    /* 2. Style du Cadre */
+    background-color: white; /* Assurez-vous que l'intérieur est blanc (ou la couleur de votre choix) */
+    border: 1px solid #ddd;  /* Bordure fine et discrète (gris clair) */
+    
+    /* 3. Optionnel : Espace intérieur (pour ne pas coller le contenu à la bordure) */
+    padding: 20px 40px; /* Padding de 20px en haut/bas et 40px gauche/droite */
+    
+    /* 4. Optionnel : Coins arrondis et ombre pour un look moderne */
+    border-radius: 10px; 
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+
+    text-align: center;
+}
+
+/* Cibler le conteneur principal de tous les éléments de déchet */
+#trashButtonsContainer {
+  /*Si vous voulez que chaque ligne de déchet soit centrée dans le formulaire */
+    display: flex; 
+       flex-direction: column; 
+       align-items: center; 
+}
+
+/* Cibler le conteneur de chaque ligne de déchet (Hypothèse : .trash-item) */
+.trash-item {
+    display: flex; /* Active l'alignement horizontal pour chaque ligne */
+    align-items: center; /* Aligne verticalement les éléments de la ligne (icône, texte, boutons) */
+    justify-content: center; /* Centre la ligne de déchet dans le conteneur */
+    margin-bottom: 20px; /* Ajoute de l'espace entre chaque ligne de déchet */
+}
+
+/* Cibler le conteneur spécifique des boutons et du compteur */
+.quantity-control {
+    display: flex;             /* Active Flexbox pour aligner `-`, `0`, et `+` horizontalement */
+    align-items: center;       /* Alignement vertical au milieu de l'élément */
+    margin-left: 20px;         /* Ajoute un espace pour séparer de l'icône/nom du déchet */
+}
+
+/* Espacement du compteur */
+.quantity-control .count {
+    margin: 0 10px; /* Ajoute de l'espace de chaque côté du chiffre (0) */
+    font-size: 1.2em; 
+}
+
+/* Optionnel : Ajuster la taille des boutons pour un meilleur look */
+.quantity-control button {
+    width: 30px;
+    height: 30px;
+    line-height: 1; /* S'assure que le texte du bouton est centré verticalement */
 }
 
 header {
