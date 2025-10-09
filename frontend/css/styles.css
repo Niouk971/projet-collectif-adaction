@@ -96,6 +96,11 @@ width: 100%;
   padding: 10px 10px;
 }
 
+#newCollectForm h2{
+text-align: center; 
+  padding: 10px 10px;
+}
+
 #newVolunteerForm {
   max-width: 1200px;
   /* Largeur maximale pour les grands écrans */
