@@ -27,7 +27,15 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors({ origin: "http://127.0.0.1:5500" }));
+
+app.use(cors({
+    origin: [
+        "http://127.0.0.1:5500", // pour ton dev local
+        "https://projet-collectif-adaction-60bnau43e-florian-niouk971-projects.vercel.app" // ton frontend Vercel
+    ],
+    methods: "GET,POST,PUT,DELETE,PATCH",
+    credentials: true
+}));
 
 app.use(morgan('dev')); // Logs les requêtes HTTP
 app.use((req, res, next) => {
