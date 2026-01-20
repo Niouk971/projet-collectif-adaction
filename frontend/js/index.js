@@ -1,15 +1,15 @@
 import { fetchFromAPI } from "../functions/fetchFromAPI.js";
 
+const API_URL = "https://projet-collectif-adaction.onrender.com"; // ← remplace par ton URL Render
+
 const userSelector = document.querySelector('#userSelector');
 const userForm = document.querySelector('#userForm');
-
 
 // 🧑‍🤝‍🧑 Pour remplir le <select> avec les usagers
 async function fetchUsers(order = 'asc', sort = 'first_name') {
     try {
         const users = await fetchFromAPI(`users?sort=${sort}&order=${order}`);
 
-        // 🔍 Vérifie que les données sont bien reçues
         if (!users || !users.data) {
             alert("Aucune donnée reçue pour les usagers.");
             console.warn("Réponse vide ou mal formée :", users);
@@ -18,11 +18,9 @@ async function fetchUsers(order = 'asc', sort = 'first_name') {
 
         console.log("voici la liste des usagers :", users);
 
-        // 🧱 Réinitialise le <select>
         if (userSelector) {
             userSelector.innerHTML = `<option value="0">-- Choisissez votre nom dans la liste --</option>`;
 
-            // 🧑‍💼 Ajoute chaque usager dans la liste déroulante
             for (const user of users.data) {
                 const adminTag = user.is_admin ? " (admin)" : "";
                 const displayName = `${user.first_name} ${user.last_name}${adminTag}`;
@@ -37,11 +35,9 @@ async function fetchUsers(order = 'asc', sort = 'first_name') {
     }
 }
 
-// Assurez-vous que le DOM est chargé avant d'attacher les événements
 document.addEventListener('DOMContentLoaded', () => {
     fetchUsers();
 
-    //pour rediriger vers la bonne page selon le type d'usager
     if (userForm) {
         userForm.addEventListener('submit', async function (event) {
             event.preventDefault();
@@ -54,11 +50,12 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             try {
-                const response = await fetch(`http://localhost:3000/users/${userId}`);
+                const response = await fetch(`${API_URL}/users/${userId}`);
                 if (!response.ok) {
                     throw new Error(`Erreur HTTP: ${response.status}`);
                 }
                 const user = await response.json();
+
                 if (user.is_admin) {
                     window.location.href = `admin.html?userId=${user.id}`;
                 } else {

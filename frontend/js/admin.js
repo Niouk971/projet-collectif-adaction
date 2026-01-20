@@ -1,3 +1,5 @@
+const API_URL = "https://projet-collectif-adaction.onrender.com"; // ← remplace par ton URL Render
+
 const userSpan = document.querySelector('#userSpan');
 const adminTable = document.querySelector('#adminTable');
 const cancelButton = document.querySelector('#cancelButton');
@@ -22,27 +24,23 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     if (userId) {
         try {
-            const response = await fetch(`http://localhost:3000/users/${userId}`);
+            const response = await fetch(`${API_URL}/users/${userId}`);
             if (!response.ok) {
                 throw new Error(`Erreur HTTP: ${response.status}`);
             }
             const user = await response.json();
-            if (user) {
-                userSpan.textContent = user.first_name;
-            } else {
-                userSpan.textContent = defaultUserName;
-            }
+            userSpan.textContent = user ? user.first_name : defaultUserName;
         } catch (error) {
             console.error("Erreur lors de la récupération de l'utilisateur :", error);
             userSpan.textContent = defaultUserName;
         }
     } else {
         userSpan.textContent = defaultUserName;
-    };
+    }
 
     // liste les usagers dans le tableau admin
     try {
-        const response = await fetch('http://localhost:3000/users');
+        const response = await fetch(`${API_URL}/users`);
         if (!response.ok) {
             throw new Error(`Erreur HTTP: ${response.status}`);
         }
@@ -56,16 +54,15 @@ document.addEventListener('DOMContentLoaded', async () => {
                 <td>${user.is_admin ? "⭐" : ""}</td>
                 <td><button>✏️</button></td>
             </tr>`;
-        };
-
+        }
     } catch (error) {
         console.error('Erreur lors de la récupération des données utilisateur :', error);
         alert('Une erreur est survenue. Veuillez réessayer.');
-    };
+    }
 
-    // liste les villes dans le select du formulaire de création de bénévole
+    // liste les villes dans le select
     try {
-        const citiesResponse = await fetch('http://localhost:3000/cities');
+        const citiesResponse = await fetch(`${API_URL}/cities`);
         if (!citiesResponse.ok) {
             throw new Error(`Erreur HTTP: ${citiesResponse.status}`);
         }
@@ -78,7 +75,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.error('Erreur lors de la récupération des villes :', error);
         alert('Une erreur est survenue lors de la récupération des villes. Veuillez réessayer.');
     }
-
 });
 
 newVolunteerFormElem.addEventListener('submit', async (event) => {
@@ -93,7 +89,7 @@ newVolunteerFormElem.addEventListener('submit', async (event) => {
     };
 
     try {
-        const response = await fetch('http://localhost:3000/users', {
+        const response = await fetch(`${API_URL}/users`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

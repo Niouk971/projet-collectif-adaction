@@ -1,3 +1,5 @@
+const API_URL = "https://projet-collectif-adaction.onrender.com"; // ← mets ton URL Render ici
+
 const userSpan = document.querySelector('#userSpan');
 const collectsTable = document.querySelector('#collectsTable');
 const citySelector = document.querySelector('#citySelector');
@@ -21,68 +23,62 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     if (userId) {
         try {
-            const response = await fetch(`http://localhost:3000/users/${userId}`);
+            const response = await fetch(`${API_URL}/users/${userId}`);
             if (!response.ok) {
                 throw new Error(`Erreur HTTP: ${response.status}`);
             }
             const user = await response.json();
-            if (user) {
-                userSpan.textContent = user.first_name;
-            } else {
-                userSpan.textContent = defaultUserName;
-            }
+            userSpan.textContent = user ? user.first_name : defaultUserName;
         } catch (error) {
             console.error("Erreur lors de la récupération de l'utilisateur :", error);
             userSpan.textContent = defaultUserName;
-        };
-    };
+        }
+    }
 
     // Liste les collectes du bénévole dans le tableau
     try {
-        const collectsResponse = await fetch(`http://localhost:3000/collects?user_id=${userId}`);
+        const collectsResponse = await fetch(`${API_URL}/collects?user_id=${userId}`);
         if (!collectsResponse.ok) {
             throw new Error(`Erreur HTTP: ${collectsResponse.status}`);
         }
         const collects = await collectsResponse.json();
 
-        // Populate the table with the collects data
         for (const collect of collects.data) {
             // Fetch collected trashes for the specific collect
-            const collectedTrashesResponse = await fetch(`http://localhost:3000/collected_trashes?collect_id=${collect.id}`);
+            const collectedTrashesResponse = await fetch(`${API_URL}/collected_trashes?collect_id=${collect.id}`);
             if (!collectedTrashesResponse.ok) {
                 throw new Error(`Erreur HTTP: ${collectedTrashesResponse.status}`);
             }
             const collectedTrashes = await collectedTrashesResponse.json();
 
-            // Initialize trash counts
             let cigaretteButts = 0;
             let plasticPackages = 0;
             let glassBottles = 0;
             let fishingGear = 0;
             let metalObjects = 0;
 
-            // Aggregate trash counts from collected_trashes
             for (const collectedTrash of collectedTrashes.data) {
                 switch (collectedTrash.trash_id) {
-                    case 1: // Cigarette butts
+                    case 1:
                         cigaretteButts = collectedTrash.quantity;
                         break;
-                    case 2: // Plastic packages
+                    case 2:
                         plasticPackages = collectedTrash.quantity;
                         break;
-                    case 3: // Glass bottles
+                    case 3:
                         glassBottles = collectedTrash.quantity;
                         break;
-                    case 4: // Fishing gear
+                    case 4:
                         fishingGear = collectedTrash.quantity;
                         break;
-                    case 5: // Metal objects
+                    case 5:
                         metalObjects = collectedTrash.quantity;
                         break;
                 }
             }
 
-            collectsTable.innerHTML += `<tr>
+            collectsTable.innerHTML += `
+                <tr>
                     <td>${collect.city_name || 'Ville inconnue'}</td>
                     <td>${collect.date.split('T')[0]}</td>
                     <td>${cigaretteButts}</td>
@@ -91,35 +87,37 @@ document.addEventListener('DOMContentLoaded', async () => {
                     <td>${fishingGear}</td>
                     <td>${metalObjects}</td>
                 </tr>`;
-        };
+        }
     } catch (error) {
         console.error('Erreur lors de la récupération des données de collecte :', error);
         alert('Une erreur est survenue lors de la récupération des données de collecte. Veuillez réessayer.');
-    };
+    }
 
+    // Liste des villes
     try {
-        const citiesResponse = await fetch('http://localhost:3000/cities');
+        const citiesResponse = await fetch(`${API_URL}/cities`);
         if (!citiesResponse.ok) {
             throw new Error(`Erreur HTTP: ${citiesResponse.status}`);
         }
         const cities = await citiesResponse.json();
 
-        // Populate the city selector with the cities
         for (const city of cities.data) {
             citySelector.innerHTML += `<option value="${city.id}">${city.name}</option>`;
-        };
+        }
     } catch (error) {
         console.error('Erreur lors de la récupération des villes :', error);
         alert('Une erreur est survenue lors de la récupération des villes. Veuillez réessayer.');
-    };
+    }
 
+    // Liste des types de déchets
     try {
-        const trashesResponse = await fetch('http://localhost:3000/trashes');
+        const trashesResponse = await fetch(`${API_URL}/trashes`);
         if (!trashesResponse.ok) {
             throw new Error(`Erreur HTTP: ${trashesResponse.status}`);
         }
         const trashes = await trashesResponse.json();
         console.log("voici la liste des déchets :", trashes);
+
         for (const trash of trashes.data) {
             trashButtonsContainer.innerHTML += `
             <div class="trashButtons">
@@ -143,7 +141,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     } catch (error) {
         console.error('Erreur lors de la récupération des types de déchets :', error);
         alert('Une erreur est survenue lors de la récupération des types de déchets. Veuillez réessayer.');
-    };
+    }
 });
 
 const updateItemCount = (index, delta) => {
@@ -164,9 +162,7 @@ trashButtonsContainer.addEventListener('click', (event) => {
     }
 });
 
-
-//CODE A PRESENTER : FELIX
-
+// Enregistrement d'une nouvelle collecte
 newCollectFormElem.addEventListener('submit', async (event) => {
     event.preventDefault();
 
@@ -174,6 +170,7 @@ newCollectFormElem.addEventListener('submit', async (event) => {
     const userId = urlParams.get('userId');
     const collectCity = document.querySelector('#citySelector').value;
     const collectDate = document.querySelector('#collectDate').value;
+
     let trashes = [];
     for (let i = 0; i < itemNumber; i++) {
         const itemSpan = document.getElementById(`item-${i}`);
@@ -188,7 +185,7 @@ newCollectFormElem.addEventListener('submit', async (event) => {
     };
 
     try {
-        const response = await fetch('http://localhost:3000/collects', {
+        const response = await fetch(`${API_URL}/collects`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -203,17 +200,16 @@ newCollectFormElem.addEventListener('submit', async (event) => {
         const result = await response.json();
         console.log('Success:', result);
 
-
-        const collectId = result.id; // on récupère l'id de la dernière collecte
+        const collectId = result.id;
         console.log('New collect ID:', collectId);
 
-        // Envoi de la donnée au serveur pour chaque type de déchet
+        // Envoi des déchets collectés
         for (let i = 0; i < itemNumber; i++) {
             const itemSpan = document.getElementById(`item-${i}`);
             const currentCount = parseInt(itemSpan.textContent);
 
             if (currentCount > 0) {
-                const trashId = i + 1; // Assuming trash ID is the index + 1
+                const trashId = i + 1;
                 const collectedTrashData = {
                     collect_id: collectId,
                     trash_id: trashId,
@@ -221,7 +217,7 @@ newCollectFormElem.addEventListener('submit', async (event) => {
                 };
 
                 try {
-                    const collectedTrashResponse = await fetch('http://localhost:3000/collected_trashes', {
+                    const collectedTrashResponse = await fetch(`${API_URL}/collected_trashes`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -242,7 +238,9 @@ newCollectFormElem.addEventListener('submit', async (event) => {
                 }
             }
         }
+
         reloadPage();
+
     } catch (error) {
         console.error('Error:', error);
         alert('Une erreur est survenue lors de l\'enregistrement de la collecte. Veuillez réessayer.');
